@@ -1,0 +1,86 @@
+import { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import {
+  BarChart3,
+  Package,
+  ShoppingCart,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+} from "lucide-react";
+
+const AdminLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const navItems = [
+    { to: "/admin", label: "Dashboard", icon: BarChart3 },
+    { to: "/admin/users", label: "Users", icon: BarChart3 },
+    { to: "/admin/products", label: "Products", icon: Package },
+    { to: "/admin/orders", label: "Orders", icon: ShoppingCart },
+  ];
+
+  return (
+    <div className="flex h-screen bg-slate-950 text-slate-100">
+
+      <aside
+        className={`${
+          sidebarOpen ? "w-64" : "w-20"
+        } bg-slate-900 border-r border-slate-800 transition-all duration-300 flex flex-col`}
+      >
+
+        <div className="h-20 flex items-center justify-center border-b border-slate-800">
+          <span className="font-serif text-xl font-bold text-white">
+            {sidebarOpen ? "SHRÉEJI" : "S"}
+          </span>
+        </div>
+        <nav className="flex-1 px-4 py-8 space-y-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center gap-4 px-4 py-3 rounded-lg transition ${
+                    isActive
+                      ? "bg-slate-800 text-white"
+                      : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                  }`
+                }
+              >
+                <Icon className="w-5 h-5" />
+                {sidebarOpen && <span>{item.label}</span>}
+              </NavLink>
+            );
+          })}
+        </nav>
+        <div className="border-t border-slate-800 p-4">
+          <button className="flex items-center gap-4 w-full px-4 py-3 rounded-lg hover:bg-red-900/20 transition text-slate-300 hover:text-red-400">
+            <LogOut className="w-5 h-5" />
+            {sidebarOpen && <span>Logout</span>}
+          </button>
+        </div>
+      </aside>
+
+      {/* Main */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="h-20 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-8">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="p-2 hover:bg-slate-800 rounded-lg transition"
+          >
+            {sidebarOpen ? <X /> : <Menu />}
+          </button>
+          <span className="text-sm text-slate-400">Admin Dashboard</span>
+        </header>
+        {/* Content */}
+        <main className="flex-1 overflow-auto bg-slate-950 p-8">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default AdminLayout;

@@ -1,0 +1,70 @@
+import { Heart, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const ProductCard = ({ product }) => {
+  return (
+     <Link to={`/product/${product._id}`} className="block">
+    <div className="group space-y-5 cursor-pointer">
+      {/* Image */}
+      <div className="relative aspect-[3/4] bg-zinc-100 overflow-hidden">
+        <img
+          src={product.image || "/placeholder.jpg"}
+          alt={product.name}
+          className="w-full h-full object-cover 
+            group-hover:scale-105 
+            group-hover:brightness-90 
+            transition-all duration-[1200ms] ease-out"
+        />
+
+        {/* Wishlist */}
+        <button
+          className="absolute top-4 right-4 p-2.5 
+            bg-white/40 backdrop-blur-md rounded-full 
+            opacity-0 -translate-y-2 
+            group-hover:opacity-100 group-hover:translate-y-0 
+            transition-all duration-300 hover:bg-white/80"
+          aria-label="Add to wishlist"
+        >
+          <Heart className="w-4 h-4 text-black" />
+        </button>
+
+        {/* Quick Buy */}
+        <button
+          className="absolute bottom-0 left-0 right-0 py-5 
+            bg-black text-white 
+            text-[10px] font-bold uppercase tracking-[0.3em] 
+            translate-y-full group-hover:translate-y-0 
+            transition-transform duration-500 ease-in-out 
+            flex items-center justify-center gap-2"
+        >
+          <ShoppingBag className="w-3.5 h-3.5" />
+          Quick Buy
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="space-y-2">
+        <div className="flex justify-between items-baseline gap-4">
+          <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] leading-tight flex-1">
+            {product.name}
+          </h4>
+          <p className="text-[12px] font-medium tracking-tighter">
+            ₹{product.price}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-medium border-r pr-3">
+            {product.category}
+          </p>
+          <span className="text-[9px] text-red-500 uppercase tracking-widest italic font-serif">
+            New Arrival
+          </span>
+        </div>
+      </div>
+    </div>
+    </Link>
+  );
+};
+
+export default ProductCard;
