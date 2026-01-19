@@ -11,7 +11,6 @@ import FooterSection from "../components/FooterSection";
 const CartPage = () => {
   const dispatch = useDispatch();
 
-  // CART
   const { cartItems } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
 

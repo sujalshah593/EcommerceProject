@@ -11,7 +11,7 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
 
   const { cartItems } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth || {}); // ✅ SAFE
+  const { user } = useSelector((state) => state.auth || {});git 
 
   const [orderStep, setOrderStep] = useState("shipping");
 
@@ -34,7 +34,6 @@ const CheckoutPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ VALIDATION
   const validateShipping = () => {
     const { firstName, email, phone, address, city, zipCode } = formData;
 
@@ -45,7 +44,7 @@ const CheckoutPage = () => {
     return true;
   };
 
-  // ✅ REAL TOTALS
+
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.qty * item.price,
     0

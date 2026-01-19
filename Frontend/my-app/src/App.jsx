@@ -18,6 +18,7 @@ import ProductsPage from "./pages/admin/ProductsPage";
 import UsersPage from "./pages/admin/UsersPage";
 import AddProductPage from "./pages/admin/AddProductPage";
 import DashboardPage from "./pages/admin/DashboardPage";
+import BoysPage from "./pages/BoysPage";
 
 const App = () => {
   return (
@@ -40,6 +41,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <MensPage key="mens" />
+            </ProtectedRoute>
+          }
+        />
+                <Route
+          path="/Boys"
+          element={
+            <ProtectedRoute>
+              <BoysPage key="boys" />
             </ProtectedRoute>
           }
         />

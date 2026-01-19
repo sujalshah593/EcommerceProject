@@ -1,6 +1,7 @@
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 
+
 const ProductCard = ({ product }) => {
   return (
      <Link to={`/product/${product._id}`} className="block">

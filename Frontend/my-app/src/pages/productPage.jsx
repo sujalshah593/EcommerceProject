@@ -13,6 +13,7 @@ import FooterSection from "../components/FooterSection.jsx";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/Slices/cartSlice.js";
 import TruckLoader from "../components/TruckLoader.jsx";
+import { toast } from "react-toastify";
 
 
 const ProductPage = () => {
@@ -28,6 +29,10 @@ const ProductPage = () => {
 
   const addToCartHandler = () => {
   dispatch(addToCart(product));
+    toast.success(`${product.name} added to cart`, {
+    position: "top-right",
+    autoClose: 1500,
+  });
   navigate("/cart");
 };
 

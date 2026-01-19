@@ -17,7 +17,7 @@ import {
 import TruckLoader from "../components/TruckLoader.jsx";
 import Navbar from "../components/Navbar.jsx";
 
-const MensContent = () => {
+const BoysContent = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -27,8 +27,8 @@ const MensContent = () => {
     (state) => state.products
   );
 
-  const mensProducts = products.filter(
-    (p) => p.targetGroup === "Men"
+  const boysProducts = products.filter(
+    (p) => p.targetGroup === "Boys"
   );
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const MensContent = () => {
   useEffect(() => {
     if (!fetchedPages.current.has(page)) {
       fetchedPages.current.add(page);
-      dispatch(fetchProducts({ page, targetGroup: "Men" }));
+      dispatch(fetchProducts({ page, targetGroup: "Boys" }));
     }
   }, [dispatch, page]);
 
@@ -93,7 +93,7 @@ const MensContent = () => {
                 Filter
               </button>
               <span className="text-xs text-gray-500">
-                {mensProducts.length} Products
+                {boysProducts.length} Products
               </span>
             </div>
 
@@ -118,7 +118,7 @@ const MensContent = () => {
           {error && <p className="text-red-500">{error}</p>}
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-16 md:gap-x-8">
-            {mensProducts.map((product) => (
+            {boysProducts.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
@@ -140,10 +140,10 @@ const MensContent = () => {
   );
 };
 
-const MensPage = () => (
+const BoysPage = () => (
   <Suspense fallback={null}>
-    <MensContent />
+    <BoysContent />
   </Suspense>
 );
 
-export default MensPage;
+export default BoysPage;
