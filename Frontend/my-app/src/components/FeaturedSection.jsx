@@ -7,7 +7,7 @@ const FeaturedSection = () => {
   return (
     <>
       <section className="px-6 md:px-12 py-24 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center font-serif">
             <div className="lg:col-span-7 relative aspect-[4/5] bg-secondary group overflow-hidden reveal">
               <img
                 src="/high-fashion-editorial.png"

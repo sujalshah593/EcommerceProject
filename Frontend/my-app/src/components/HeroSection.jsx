@@ -9,7 +9,7 @@ const HeroSection = () => {
         className="absolute inset-0 w-full h-full object-cover brightness-90"
       />
 
-      <div className="relative z-10 px-6 md:px-12 max-w-7xl mx-auto text-white space-y-6">
+      <div className="relative z-10 px-6 md:px-12 max-w-7xl mx-auto font-serif text-white space-y-6">
         <span className="text-[10px] uppercase tracking-[0.5em] opacity-70">
           Spring / Summer 2025
         </span>

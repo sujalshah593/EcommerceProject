@@ -9,12 +9,11 @@ import Navbar from "../components/Navbar.jsx";
 import { ShoppingBag, Heart, Truck, ShieldCheck } from "lucide-react";
 import { fetchProducts } from "../Redux/Slices/productSlice.js";
 import ProductCard from "../components/ProductCard.jsx";
-import FooterSection from "../components/FooterSection.jsx"; 
+import FooterSection from "../components/FooterSection.jsx";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/Slices/cartSlice.js";
 import TruckLoader from "../components/TruckLoader.jsx";
 import { toast } from "react-toastify";
-
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -22,19 +21,18 @@ const ProductPage = () => {
   const { products } = useSelector((state) => state.products);
   const navigate = useNavigate();
 
-
   const { product, loading, error } = useSelector(
-    (state) => state.productDetails
+    (state) => state.productDetails,
   );
 
   const addToCartHandler = () => {
-  dispatch(addToCart(product));
+    dispatch(addToCart(product));
     toast.success(`${product.name} added to cart`, {
-    position: "top-right",
-    autoClose: 1500,
-  });
-  navigate("/cart");
-};
+      position: "top-right",
+      autoClose: 1500,
+    });
+    navigate("/cart");
+  };
 
   useEffect(() => {
     dispatch(fetchProductById(id));
@@ -45,14 +43,12 @@ const ProductPage = () => {
     };
   }, [dispatch, id]);
 
-
-
   if (loading) {
     return (
       <>
         <Navbar />
         <div className="pt-32 text-center text-sm tracking-widest uppercase">
-          <TruckLoader/>
+          <TruckLoader />
         </div>
       </>
     );
@@ -70,7 +66,7 @@ const ProductPage = () => {
   }
 
   if (!product) return null;
-    const otherProducts = products
+  const otherProducts = products
     .filter((p) => p._id !== product?._id)
     .slice(0, 4);
 
@@ -123,8 +119,8 @@ const ProductPage = () => {
               {/* ACTIONS */}
               <div className="space-y-4 pt-4">
                 <button
-                 onClick={addToCartHandler}
-  disabled={product.countInStock === 0}
+                  onClick={addToCartHandler}
+                  disabled={product.countInStock === 0}
                   className="w-full py-5 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-40"
                 >
                   <ShoppingBag className="w-4 h-4" />
@@ -161,7 +157,7 @@ const ProductPage = () => {
           </div>
         </section>
       </main>
-      <FooterSection/>
+      <FooterSection />
     </>
   );
 };

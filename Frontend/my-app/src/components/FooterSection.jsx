@@ -5,7 +5,7 @@ const FooterSection = () => {
   return (
     <>
         <footer className="bg-black text-white px-6 md:px-12 pt-24 pb-12">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-24 pb-24 border-b border-white/10">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 font-serif lg:gap-24 pb-24 border-b border-white/10">
             <div className="md:col-span-4 space-y-8">
               <a href="/" className="text-2xl font-bold tracking-tighter uppercase">
                 SHRÉEJI<span className="text-accent">.</span>
@@ -95,7 +95,8 @@ const FooterSection = () => {
                 </div>
               </div>
             </div>
-          </div>a       <div className="max-w-7xl mx-auto pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
+          </div>
+             <div className="max-w-7xl mx-auto pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
             <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">
               © 2025 SHRÉEJI DESIGN STUDIO. ALL RIGHTS RESERVED.
             </p>

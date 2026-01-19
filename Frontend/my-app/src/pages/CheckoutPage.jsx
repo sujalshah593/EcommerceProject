@@ -5,13 +5,15 @@ import Navbar from "../components/Navbar";
 import FooterSection from "../components/FooterSection.jsx";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+import { toastSuccess } from "../utils/toast.js";
+import { Trash } from "lucide-react";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { cartItems } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth || {});git 
+  const { user } = useSelector((state) => state.auth || {}); 
 
   const [orderStep, setOrderStep] = useState("shipping");
 
@@ -85,7 +87,7 @@ const CheckoutPage = () => {
       await api.post("/orders", orderPayload);
 
       dispatch(clearCart());
-      alert("Order placed successfully!");
+      toastSuccess("Login successfully!");
       navigate("/");
     } catch (error) {
       console.error("Checkout error:", error.response?.data || error.message);
@@ -111,7 +113,7 @@ const CheckoutPage = () => {
           <div className="flex items-center justify-between mb-12">
             <Link
               to="/cart"
-              className="text-sm text-gray-500 hover:text-black transition"
+              className="text-sm text-black font-serif hover:text-black transition"
             >
               ← Back to Cart
             </Link>
@@ -121,7 +123,7 @@ const CheckoutPage = () => {
             {/* spacer to keep title centered */}
             <div className="w-24"></div>
           </div>
-          <div className="flex gap-8 mb-12">
+          <div className="flex gap-8 mb-12 font-serif">
             {["shipping", "payment"].map((step, i) => (
               <div
                 key={step}
@@ -143,7 +145,7 @@ const CheckoutPage = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 font-serif lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="space-y-8">
                 {orderStep === "shipping" && (
@@ -289,9 +291,9 @@ const CheckoutPage = () => {
 
             <div className="lg:col-span-1">
               <div className="bg-gray-100 p-8 sticky top-24">
-                <h2 className="font-serif text-xl mb-6">Order Summary</h2>
+                <h2 className="font-serif font-bold text-xl mb-6">Order Summary</h2>
 
-                <div className="space-y-3 mb-6">
+                <div className="space-y-3 mb-6 font-serif">
                   <div className="flex justify-between text-sm">
                     <span>Subtotal</span>
                     <span>₹{subtotal}</span>
@@ -306,8 +308,8 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
-                <div className="border-t pt-4 flex justify-between">
-                  <span>Total</span>
+                <div className="border-t font-serif pt-4 flex justify-between">
+                  <span className="font-bold">Total</span>
                   <span className="text-2xl">₹{total}</span>
                 </div>
               </div>

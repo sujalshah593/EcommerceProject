@@ -5,7 +5,7 @@ const ContactSection = () => {
   return (
     <>
     <section className="bg-zinc-50 py-32 border-y border-border">
-          <div className="px-6 md:px-12 max-w-3xl mx-auto text-center space-y-8">
+          <div className="px-6 md:px-12 max-w-3xl mx-auto text-center space-y-8 font-serif">
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-accent">Newsletter</span>
             <h2 className="text-4xl md:text-6xl font-serif">Stay Informed</h2>
             <p className="text-muted-foreground leading-relaxed text-sm md:text-base">

@@ -50,19 +50,13 @@ const Navbar = () => {
           className="lg:hidden w-6 h-6"
           onClick={() => setMobileOpen(true)}
         />
-        {/* ================= MOBILE MENU ================= */}
-        {/* ================= MOBILE MENU ================= */}
         {mobileOpen && (
           <div className="fixed inset-0 z-[999] lg:hidden">
-            {/* BACKDROP */}
             <div
               className="absolute inset-0 bg-black/40"
               onClick={() => setMobileOpen(false)}
             />
-
-            {/* DRAWER */}
             <div className="absolute left-0 top-0 h-full w-[80%] max-w-sm bg-white shadow-xl flex flex-col">
-              {/* HEADER */}
               <div className="flex items-center justify-between px-6 py-4 border-b">
                 <span className="text-lg font-bold uppercase">
                   SHRÉEJI<span className="text-red-500">.</span>
@@ -76,7 +70,6 @@ const Navbar = () => {
                 </button>
               </div>
 
-              {/* MENU LINKS */}
               <div className="flex flex-col px-6 py-8 space-y-6 text-sm font-bold uppercase tracking-widest">
                 <Link to="/" onClick={() => setMobileOpen(false)}>
                   Home

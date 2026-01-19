@@ -40,7 +40,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f7f3ee] px-4 relative">
-
       <Link
         to="/"
         className="absolute top-6 left-6 text-sm text-gray-700 hover:underline"
@@ -126,9 +125,10 @@ const Register = () => {
         </div>
         <button
           onClick={googleSignup}
-          className="w-full py-3 border border-gray-300 bg-transparent font-medium hover:bg-gray-100 transition"
+          className="w-full py-3 border border-gray-300 bg-transparent font-medium hover:bg-gray-100 transition flex items-center justify-center gap-2"
         >
-          Google
+          <FcGoogle size={22} />
+          Continue with Google
         </button>
         <p className="text-xs text-center text-gray-600 mt-6">
           By clicking continue, you agree to our{" "}
