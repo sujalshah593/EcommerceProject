@@ -1,8 +1,16 @@
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import {useDispatch, useSelector} from "react-redux";
+import { toggleFavorite } from "../Redux/Slices/favoriteSlice.js";
 
 const ProductCard = ({ product }) => {
+
+  const dispatch = useDispatch();
+  const { favorites } = useSelector((state) => state.favorite);
+
+
+
+  const isFavorite = favorites.some((p) => p._id === product._id); 
   return (
      <Link to={`/product/${product._id}`} className="block">
     <div className="group space-y-5 cursor-pointer">
@@ -18,6 +26,7 @@ const ProductCard = ({ product }) => {
         />
 
         <button
+          onClick={() => dispatch(toggleFavorite(product))}
           className="absolute top-4 right-4 p-2.5 
             bg-white/40 backdrop-blur-md rounded-full 
             opacity-0 -translate-y-2 
@@ -25,7 +34,7 @@ const ProductCard = ({ product }) => {
             transition-all duration-300 hover:bg-white/80"
           aria-label="Add to wishlist"
         >
-          <Heart className="w-4 h-4 text-black" />
+          <Heart className={`w-5 hover:cursor-pointer hover:text-pink-500 hover:fill-pink-500 h-5 transition ${isFavorite ? "fill-pink-500 text-pink-500 " : "text-gray-500"}`} />
         </button>
 
         <button

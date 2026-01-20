@@ -43,7 +43,7 @@ const CartPage = () => {
         </h1>
 
         {cartItems.length === 0 ? (
-          <div className="text-center py-16">
+          <div className="text-center font-serif py-16">
             <p className="text-gray-500 mb-8">Your shopping bag is empty</p>
             <Link to="/" className="inline-block px-8 py-3 bg-black text-white">
               Continue Shopping

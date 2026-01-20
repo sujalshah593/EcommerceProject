@@ -19,6 +19,7 @@ import UsersPage from "./pages/admin/UsersPage";
 import AddProductPage from "./pages/admin/AddProductPage";
 import DashboardPage from "./pages/admin/DashboardPage";
 import BoysPage from "./pages/BoysPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 const App = () => {
   return (
@@ -44,7 +45,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-                <Route
+        <Route
           path="/Boys"
           element={
             <ProtectedRoute>
@@ -73,6 +74,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <ProtectedRoute>
+              <FavoritesPage />
             </ProtectedRoute>
           }
         />

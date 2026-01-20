@@ -14,12 +14,16 @@ import { useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/Slices/cartSlice.js";
 import TruckLoader from "../components/TruckLoader.jsx";
 import { toast } from "react-toastify";
+import { toggleFavorite } from "../Redux/Slices/favoriteSlice.js";
+
 
 const ProductPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
   const navigate = useNavigate();
+const { favorites } = useSelector((state) => state.favorite);
+
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails,
@@ -69,6 +73,28 @@ const ProductPage = () => {
   const otherProducts = products
     .filter((p) => p._id !== product?._id)
     .slice(0, 4);
+
+
+
+
+
+const isFavorite = favorites.find((p) => p._id === product._id);
+
+  const toggleFavoriteHandler = () => {
+  dispatch(toggleFavorite(product));
+
+  if (isFavorite) {
+    toast.info(`${product.name} removed from favorites`, {
+      position: "top-right",
+      autoClose: 1500,
+    });
+  } else {
+    toast.success(`${product.name} added to favorites`, {
+      position: "top-right",
+      autoClose: 1500,
+    });
+  }
+};  
 
   return (
     <>
@@ -127,10 +153,18 @@ const ProductPage = () => {
                   Add to Cart
                 </button>
 
-                <button className="w-full py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all">
-                  <Heart className="w-4 h-4" />
-                  Add to Wishlist
-                </button>
+<button
+  onClick={toggleFavoriteHandler}
+  className="w-full py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all"
+>
+  <Heart
+    className={`w-4 h-4 transition-colors ${
+      isFavorite ? "text-pink-500 fill-pink-500" : "text-black"
+    }`}
+  />
+  {isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
+</button>
+
               </div>
 
               {/* TRUST */}
