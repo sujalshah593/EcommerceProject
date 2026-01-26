@@ -10,11 +10,11 @@ const FooterSection = () => {
               <a href="/" className="text-2xl font-bold tracking-tighter uppercase">
                 SHRÉEJI<span className="text-accent">.</span>
               </a>
-              <p className="text-xs text-zinc-400 leading-relaxed max-w-sm">
+              <p className="text text-zinc-400 leading-relaxed max-w-sm">
                 A design-driven clothing studio focused on creating timeless garments for the modern individual. We
                 believe in the beauty of simplicity and the integrity of natural materials.
               </p>
-              <div className="flex gap-6">
+              <div className="flex gap-6 text">
                 <Instagram className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
                 <Facebook className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
                 <Twitter className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
@@ -22,8 +22,8 @@ const FooterSection = () => {
             </div>
 
             <div className="md:col-span-2 space-y-6">
-              <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500">Shop</h5>
-              <ul className="space-y-4 text-[10px] uppercase tracking-widest font-bold">
+              <h5 className="text-[10px] text1 font-bold uppercase tracking-[0.3em] text-zinc-500">Shop</h5>
+              <ul className="space-y-4 text-[10px] uppercase text tracking-widest font-bold">
                 <li>
                   <a href="#" className="hover:text-accent transition-colors">
                     Boys
@@ -48,10 +48,10 @@ const FooterSection = () => {
             </div>
 
             <div className="md:col-span-2 space-y-6">
-              <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500">About</h5>
-              <ul className="space-y-4 text-[10px] uppercase tracking-widest font-bold">
+              <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text1 text-zinc-500">About</h5>
+              <ul className="space-y-4 text-[10px] uppercase text tracking-widest font-bold">
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <a href="#" className="hover:text-accent  transition-colors">
                     Journal
                   </a>
                 </li>
@@ -74,12 +74,12 @@ const FooterSection = () => {
             </div>
 
             <div className="md:col-span-4 space-y-6">
-              <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500">Customer Care</h5>
+              <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text1 text-zinc-500">Customer Care</h5>
               <div className="space-y-4">
-                <p className="text-[10px] font-bold uppercase tracking-widest hover:text-accent transition-colors cursor-pointer border-b border-white/10 pb-2">
+                <p className="text-[10px] text font-bold uppercase tracking-widest hover:text-accent transition-colors cursor-pointer border-b border-white/10 pb-2">
                   support@vero.com
                 </p>
-                <div className="grid grid-cols-2 gap-4 text-[10px] uppercase tracking-widest font-bold text-zinc-400">
+                <div className="grid text1 grid-cols-2 gap-4 text-[10px] uppercase tracking-widest font-bold text-zinc-400">
                   <a href="#" className="hover:text-white transition-colors">
                     Shipping
                   </a>

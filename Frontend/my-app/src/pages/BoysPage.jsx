@@ -88,19 +88,16 @@ const BoysContent = () => {
         <section className="sticky top-[72px] z-40 bg-white/95 backdrop-blur border-b px-6 md:px-12 py-4">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center gap-6">
-              <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+              <button className="flex items-center text gap-2 text-[10px] font-bold uppercase tracking-widest">
                 <SlidersHorizontal className="w-4 h-4" />
                 Filter
               </button>
-              <span className="text-xs text-gray-500">
-                {boysProducts.length} Products
-              </span>
             </div>
 
             <div className="relative">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
-                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
+                className="flex text1 items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
               >
                 Sort By
                 <ChevronDown
@@ -124,7 +121,7 @@ const BoysContent = () => {
           </div>
 
           {page < pages && (
-            <div className="flex justify-center mt-16">
+            <div className="flex text1 justify-center mt-16">
               <button
                 onClick={() => setPage((prev) => prev + 1)}
                 disabled={loading}

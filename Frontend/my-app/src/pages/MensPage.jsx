@@ -17,6 +17,7 @@ import {
 import TruckLoader from "../components/TruckLoader.jsx";
 import Navbar from "../components/Navbar.jsx";
 
+
 const MensContent = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const dispatch = useDispatch();
@@ -88,19 +89,16 @@ const MensContent = () => {
         <section className="sticky top-[72px] z-40 bg-white/95 backdrop-blur border-b px-6 md:px-12 py-4">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex items-center gap-6">
-              <button className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+              <button className="flex text items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
                 <SlidersHorizontal className="w-4 h-4" />
                 Filter
               </button>
-              <span className="text-xs text-gray-500">
-                {mensProducts.length} Products
-              </span>
             </div>
 
             <div className="relative">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
-                className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
+                className="flex text1 items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
               >
                 Sort By
                 <ChevronDown
@@ -128,7 +126,7 @@ const MensContent = () => {
               <button
                 onClick={() => setPage((prev) => prev + 1)}
                 disabled={loading}
-                className="px-12 py-4 border border-black text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition"
+                className="px-12 py-4 border text1 border-black text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-black hover:text-white transition"
               >
                 {loading ? "Loading..." : "Load More"}
               </button>

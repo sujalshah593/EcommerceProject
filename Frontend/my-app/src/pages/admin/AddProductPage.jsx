@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../../api/axios.js";
 import { useNavigate } from "react-router-dom";
+import { toastSuccess } from "../../utils/toast.js";
 
 const AddProductPage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const submitHandler = async (e) => {
       countInStock: Number(form.countInStock),
     });
 
-    alert("Product added successfully");
+    toastSuccess("Product added successfully");
     navigate("/admin/products");
   } catch (err) {
     console.error(err.response?.data || err.message);
@@ -41,11 +42,11 @@ const submitHandler = async (e) => {
 
   return (
     <div className="max-w-2xl font-serif mx-auto space-y-8">
-      <h1 className="text-3xl font-serif font-bold text-white">Add Product</h1>
+      <h1 className="text-3xl font-serif font-bold text-white text1">Add Product</h1>
 
       <form
         onSubmit={submitHandler}
-        className="bg-slate-800 p-8 rounded-lg space-y-4"
+        className="bg-slate-800 text p-8 rounded-lg space-y-4"
       >
         <input
           name="name"
@@ -109,7 +110,7 @@ const submitHandler = async (e) => {
           className="w-full p-3 bg-slate-900 text-white border border-slate-700 rounded"
         />
 
-        <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded">
+        <button className="w-full text1 bg-purple-600 hover:bg-purple-700 text-white py-3 rounded">
           Add Product
         </button>
       </form>

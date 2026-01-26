@@ -6,9 +6,9 @@ const ContactSection = () => {
     <>
     <section className="bg-zinc-50 py-32 border-y border-border">
           <div className="px-6 md:px-12 max-w-3xl mx-auto text-center space-y-8 font-serif">
-            <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-accent">Newsletter</span>
-            <h2 className="text-4xl md:text-6xl font-serif">Stay Informed</h2>
-            <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+            <span className="text-[10px] text1 font-bold uppercase tracking-[0.5em] text-accent">Newsletter</span>
+            <h2 className="text-4xl md:text-6xl text1 font-serif">Stay Informed</h2>
+            <p className="text-muted-foreground leading-relaxed text md:text-base">
               Be the first to hear about new collection launches, exclusive events, and the latest from the VÉRO
               Journal.
             </p>
@@ -16,9 +16,9 @@ const ContactSection = () => {
               <input
                 type="email"
                 placeholder="EMAIL ADDRESS"
-                className="flex-1 bg-transparent py-4 text-[10px] font-bold tracking-[0.2em] uppercase focus:outline-none"
+                className="flex-1 bg-transparent py-4 text-[10px] text tracking-[0.2em] uppercase focus:outline-none"
               />
-              <button className="py-4 md:px-8 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
+              <button className="py-4 md:px-8 text-[10px] text1 font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-2 group">
                 Subscribe <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
               </button>
             </form>

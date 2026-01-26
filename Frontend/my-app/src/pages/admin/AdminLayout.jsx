@@ -30,11 +30,11 @@ const AdminLayout = () => {
       >
 
         <div className="h-20 flex items-center justify-center border-b border-slate-800">
-          <span className="font-serif text-xl font-bold text-white">
+          <span className="font-serif text-xl text1 font-bold text-white">
             {sidebarOpen ? "SHRÉEJI" : "S"}
           </span>
         </div>
-        <nav className="flex-1 px-4 py-8 space-y-2">
+        <nav className="flex-1 text1 px-4 py-8 space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -55,7 +55,7 @@ const AdminLayout = () => {
             );
           })}
         </nav>
-        <div className="border-t border-slate-800 p-4">
+        <div className="border-t text1 border-slate-800 p-4">
           <button className="flex items-center gap-4 w-full px-4 py-3 rounded-lg hover:bg-red-900/20 transition text-slate-300 hover:text-red-400">
             <LogOut className="w-5 h-5" />
             {sidebarOpen && <span>Logout</span>}
@@ -72,7 +72,7 @@ const AdminLayout = () => {
           >
             {sidebarOpen ? <X /> : <Menu />}
           </button>
-          <span className="text-sm text-slate-400">Admin Dashboard</span>
+          <span className="text-sm text-slate-400 text">Admin Dashboard</span>
         </header>
         {/* Content */}
         <main className="flex-1 overflow-auto bg-slate-950 p-8">

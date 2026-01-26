@@ -46,14 +46,14 @@ const ProductCard = ({ product }) => {
             flex items-center justify-center gap-2 font-serif"
         >
           <ShoppingBag className="w-3.5 h-3.5" />
-          Quick Buy
+          <p className="text">Quick Buy</p>
         </button>
       </div>
 
       {/* Content */}
       <div className="space-y-2">
         <div className="flex justify-between items-baseline gap-4 font-serif">
-          <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] leading-tight flex-1">
+          <h4 className="text-[11px] text1 uppercase tracking-[0.2em] leading-tight flex-1">
             {product.name}
           </h4>
           <p className="text-[12px] font-medium tracking-tighter">
@@ -65,7 +65,7 @@ const ProductCard = ({ product }) => {
           <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-medium border-r pr-3">
             {product.category}
           </p>
-          <span className="text-[9px] text-red-500 uppercase tracking-widest italic font-serif">
+          <span className="text-[9px] text text-red-500 uppercase tracking-widest italic font-serif">
             New Arrival
           </span>
         </div>

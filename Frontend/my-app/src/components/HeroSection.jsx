@@ -1,10 +1,11 @@
 import men from '../assets/men.jpg';
+import image from '../assets/image.png'
 const HeroSection = () => {
   return (
     <section className="relative h-screen flex items-center pt-20">
       
       <img
-        src={men}
+        src={image}
         alt="Hero"
         className="absolute inset-0 w-full h-full object-cover brightness-90"
       />
@@ -14,16 +15,16 @@ const HeroSection = () => {
           Spring / Summer 2025
         </span>
 
-        <h1 className="text-6xl md:text-9xl font-serif leading-none">
+        <h1 className="text-6xl md:text-9xl  font-serif leading-none">
           The New <br />
           Standard<span className="text-red-500 italic">.</span>
         </h1>
 
-        <p className="max-w-md text-lg opacity-80">
+        <p className="max-w-md text-lg text opacity-80">
           Redefining contemporary elegance through structural silhouettes.
         </p>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 text1">
           <button className="px-10 py-4 bg-white text-black text-[10px] uppercase tracking-widest">
             Shop Collection
           </button>

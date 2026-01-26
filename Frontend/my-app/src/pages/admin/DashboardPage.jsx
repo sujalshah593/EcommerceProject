@@ -31,7 +31,7 @@ const DashboardPage = () => {
   return (
     <div className="space-y-10">
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 font-serif">
+      <div className="grid grid-cols-1 text1 md:grid-cols-4 gap-6 font-serif">
         <StatCard title="Total Revenue"  value={`₹${stats.totalRevenue}`} />
         <StatCard title="Total Orders" value={stats.totalOrders} />
         <StatCard title="Active Users" value={stats.activeUsers} />
@@ -45,7 +45,7 @@ const DashboardPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* SALES BY CATEGORY */}
         <div className="bg-slate-800 p-6 rounded-lg font-serif ">
-          <h2 className="text-lg mb-4">Sales by Category</h2>
+          <h2 className="text-lg mb-4 text1">Sales by Category</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -69,7 +69,7 @@ const DashboardPage = () => {
         </div>
         {/* MONTHLY ORDERS */}
         <div className="bg-slate-800 font-serif p-6 rounded-lg">
-          <h2 className="text-lg mb-4">Monthly Orders</h2>
+          <h2 className="text-lg mb-4 text1">Monthly Orders</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={stats.monthlyOrderData} >
               <XAxis dataKey="month" />

@@ -28,24 +28,24 @@ const CartPage = () => {
     <div className="min-h-screen bg-white">
       <nav className="border-b sticky top-0 bg-white/95 backdrop-blur z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between">
-          <Link to="/" className="font-serif text-2xl tracking-wider">
+          <Link to="/" className="font-serif text1 text-2xl tracking-wider">
             SHREÉJI
           </Link>
-          <Link to="/" className="text-sm text-gray-500 font-serif hover:text-black">
+          <Link to="/" className="text-sm text text-gray-500 font-serif hover:text-black">
             Continue Shopping
           </Link>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <h1 className="font-serif text-4xl tracking-wide mb-12">
+        <h1 className="font-serif text1 text-4xl tracking-wide mb-12">
           Shopping Bag
         </h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center font-serif py-16">
-            <p className="text-gray-500 mb-8">Your shopping bag is empty</p>
-            <Link to="/" className="inline-block px-8 py-3 bg-black text-white">
+            <p className="text-gray-500 mb-8 text">Your shopping bag is empty</p>
+            <Link to="/" className="inline-block text px-8 py-3 bg-black text-white">
               Continue Shopping
             </Link>
           </div>
@@ -61,13 +61,13 @@ const CartPage = () => {
                   />
 
                   <div className="flex-1">
-                    <h3 className="font-serif text-lg mb-2">{item.name}</h3>
+                    <h3 className="font-serif text-lg mb-2 text1">{item.name}</h3>
 
-                    <p className="text-sm font-serif text-gray-500 mb-4">
+                    <p className="text-sm font-serif text-gray-500 text mb-4">
                       Price: ₹{item.price}
                     </p>
                     <div className="flex items-center gap-4 mb-4">
-                      <span className="text-sm text-gray-500 font-serif">Quantity</span>
+                      <span className="text-sm text-gray-500 font-serif text">Quantity</span>
                       <div className="flex items-center border">
                         <button
                           onClick={() =>
@@ -81,7 +81,7 @@ const CartPage = () => {
                           <Minus />
                         </button>
 
-                        <span className="px-4 py-2 border-l border-r">
+                        <span className="px-4 py-2 text1 border-l border-r">
                           {item.qty}
                         </span>
 
@@ -103,14 +103,14 @@ const CartPage = () => {
 
                     <button
                       onClick={() => dispatch(removeFromCart(item._id))}
-                      className="text-sm text-red-500 hover:underline"
+                      className="text-sm text text-red-500 hover:underline"
                     >
                       <Trash />
                     </button>
                   </div>
 
                   <div className="text-right">
-                    <p className="text-sm">
+                    <p className="text-sm text1">
                       ₹{(item.price * item.qty).toLocaleString()}
                     </p>
                   </div>
@@ -120,10 +120,10 @@ const CartPage = () => {
 
             <div className="lg:col-span-1">
               <div className="bg-gray-100 p-8 sticky top-24">
-                <h2 className="font-serif text-xl mb-8">Order Summary</h2>
+                <h2 className="font-serif text1 text-xl mb-8">Order Summary</h2>
 
-                <div className="space-y-4 mb-8 font-serif">
-                  <div className="flex justify-between text-sm">
+                <div className="space-y-4 text mb-8 font-serif">
+                  <div className="flex  justify-between text-sm">
                     <span className="text-gray-500">Subtotal</span>
                     <span>₹{subtotal.toLocaleString()}</span>
                   </div>
@@ -142,8 +142,8 @@ const CartPage = () => {
                   )}
                 </div>
 
-                <div className="border-t pt-4 mb-8 flex justify-between">
-                  <span className="font-serif font-bold">Total</span>
+                <div className="border-t pt-4 mb-8 text1 flex justify-between">
+                  <span className="font-serif font-bold text1">Total</span>
                   <span className="font-serif text-xl">
                     ₹{total.toLocaleString()}
                   </span>
@@ -151,14 +151,14 @@ const CartPage = () => {
 
                 <Link
                   to="/checkout"
-                  className="block font-serif text-center w-full bg-black text-white py-3 uppercase tracking-wider"
+                  className="block font-serif text text-center w-full bg-black text-white py-3 uppercase tracking-wider"
                 >
                   Proceed to Checkout
                 </Link>
 
                 <Link
                   to="/"
-                  className="block text-center font-serif w-full mt-4 border py-3"
+                  className="block text text-center font-serif w-full mt-4 border py-3"
                 >
                   Continue Shopping
                 </Link>
@@ -170,16 +170,16 @@ const CartPage = () => {
         {/* ADD MORE ITEMS */}
         {products?.length > 0 && (
           <>
-            <h2 className="text-xl mt-20 mb-6">Add more items</h2>
+            <h2 className="text-xl mt-20 mb-6 text1">Add more items</h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {products.slice(0, 4).map((p) => (
                 <div key={p._id} className="relative">
                   <ProductCard product={p} />
 
                   <button
                     onClick={() => dispatch(addToCart(p))}
-                    className="absolute   left-3  right-3 bg-black text-white text-xs mt-2  py-3 uppercase tracking-wider"
+                    className="absolute text  left-3  right-3 bg-black text-white text-xs mt-2  py-3 uppercase tracking-wider"
                   >
                     Add to Cart
                   </button>

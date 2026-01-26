@@ -20,6 +20,7 @@ import AddProductPage from "./pages/admin/AddProductPage";
 import DashboardPage from "./pages/admin/DashboardPage";
 import BoysPage from "./pages/BoysPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import PrivacyPolicyPage from "./pages/Privacy";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/auth/callback" element={<OAuthCallback />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route
           path="/"
           element={

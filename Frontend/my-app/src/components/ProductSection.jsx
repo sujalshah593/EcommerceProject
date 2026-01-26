@@ -10,7 +10,7 @@ const ProductSection = ({
 }) => {
   return (
     <section className="px-6 md:px-12 py-24 max-w-7xl mx-auto">
-      <h2 className="text-4xl font-serif italic mb-12">
+      <h2 className="text-4xl text1 font-serif italic mb-12">
         New Arrivals
       </h2>
 
@@ -18,7 +18,7 @@ const ProductSection = ({
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {products.length === 0 && !loading && (
-          <p className="col-span-full text-center text-gray-500">
+          <p className="col-span-full text text-center text-gray-500">
             No products found
           </p>
         )}
@@ -33,7 +33,7 @@ const ProductSection = ({
           <button
             onClick={() => setCurrentPage((prev) => prev + 1)}
             disabled={loading}
-            className="px-10 py-3 border border-black text-xs font-bold uppercase tracking-widest
+            className="px-10 text1 py-3 border border-black text-xs font-bold uppercase tracking-widest
                        hover:bg-black hover:text-white transition"
           >
             {loading ? "Loading..." : "Load More"}

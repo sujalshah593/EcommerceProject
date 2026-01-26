@@ -34,10 +34,10 @@ const FavoritesPage = () => {
       {/* Header */}
       <div className="border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-16">
-          <h1 className="font-serif text-4xl md:text-5xl font-light tracking-tight">
+          <h1 className="font-serif text1 text-4xl md:text-5xl font-light tracking-tight">
             Your Favorites
           </h1>
-          <p className="text-muted-foreground mt-4 text-lg">
+          <p className="text-muted-foreground text ml-5 mt-4 text-lg">
             {favorites.length}{" "}
             {favorites.length === 1 ? "item" : "items"} saved
           </p>
@@ -48,13 +48,13 @@ const FavoritesPage = () => {
         // Empty State
         <div className="max-w-7xl font-serif mx-auto px-6 py-24 text-center">
           <Heart className="w-16 h-16 mx-auto mb-6 text-border" strokeWidth={1} />
-          <h2 className="font-serif text-2xl mb-3">No Favorites Yet</h2>
-          <p className="text-muted-foreground mb-8">
+          <h2 className="font-serif text-2xl mb-3 text">No Favorites Yet</h2>
+          <p className="text-muted-foreground mb-8 text">
             Start adding items to your favorites to save them for later.
           </p>
 
           <Link to="/mens">
-            <button className="bg-accent bg-black text-white hover:cursor-pointer hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-md">
+            <button className="bg-accent text1 bg-black text-white hover:cursor-pointer hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-md">
               Continue Shopping
             </button>
           </Link>
@@ -75,7 +75,7 @@ const FavoritesPage = () => {
                   {/* Overlay Actions */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end justify-between p-4">
                     <Link to={`/product/${item._id}`}>
-                      <button className="bg-foreground text-background hover:bg-gray-300 hover:text-white hover:cursor-pointer px-4 py-2 text-sm flex items-center gap-2 rounded-md">
+                      <button className="bg-foreground text text-background hover:bg-gray-300 hover:text-white hover:cursor-pointer px-4 py-2 text-sm flex items-center gap-2 rounded-md">
                         <ShoppingBag className="w-4 h-4" />
                         View
                       </button>
@@ -92,13 +92,13 @@ const FavoritesPage = () => {
 
                 {/* Product Info */}
                 <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">
+                  <p className="text-xs text text-muted-foreground uppercase tracking-wider">
                     {item.category}
                   </p>
-                  <h3 className="font-serif text-lg leading-tight">
+                  <h3 className="font-serif text1 text-lg leading-tight">
                     {item.name}
                   </h3>
-                  <p className="font-semibold text-accent">
+                  <p className="font-semibold text text-accent">
                     ₹{item.price.toLocaleString()}
                   </p>
                 </div>
@@ -109,22 +109,22 @@ const FavoritesPage = () => {
           {/* Summary Footer */}
           <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-end">
             <div>
-              <p className="text-sm text-muted-foreground mb-2">Total Value</p>
-              <p className="font-serif text-3xl font-light">
+              <p className="text-sm text-muted-foreground mb-2 text1">Total Value</p>
+              <p className="font-serif text-3xl font-light text">
                 ₹{totalPrice.toLocaleString()}
               </p>
             </div>
 
             <div className="flex gap-4 mt-8 md:mt-0">
-              <Link to="/mens">
-                <button className="border px-6 py-3 rounded-md hover:bg-black font-serif hover:text-white hover:cursor-pointer">
+              <Link to="/cart">
+                <button className="border text1 px-6 py-3 rounded-md hover:bg-black font-serif hover:text-white hover:cursor-pointer">
                   Continue Shopping
                 </button>
               </Link>
 
               <button
                 onClick={addAllToCart}
-                className="bg-accent font-serif border hover:cursor-pointer hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-md"
+                className="bg-accent font-serif text1 border hover:cursor-pointer hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-md"
               >
                 Add All to Cart
               </button>

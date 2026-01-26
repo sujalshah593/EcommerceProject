@@ -118,20 +118,20 @@ const isFavorite = favorites.find((p) => p._id === product._id);
             <div className="lg:sticky lg:top-32 space-y-10">
               {/* Title */}
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-6xl font-serif tracking-tight">
+                <h1 className="text-4xl text1 md:text-6xl font-serif tracking-tight">
                   {product.name}
                 </h1>
 
-                <p className="text-2xl font-light">₹{product.price}</p>
+                <p className="text-2xl font-light text">₹{product.price}</p>
               </div>
 
               {/* Description */}
-              <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              <p className="text-sm text md:text-base text-gray-600 leading-relaxed">
                 {product.description}
               </p>
 
               {/* Stock */}
-              <p className="text-xs uppercase tracking-widest">
+              <p className="text-xs text uppercase tracking-widest">
                 Stock:{" "}
                 <span
                   className={`font-bold ${
@@ -147,7 +147,7 @@ const isFavorite = favorites.find((p) => p._id === product._id);
                 <button
                   onClick={addToCartHandler}
                   disabled={product.countInStock === 0}
-                  className="w-full py-5 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-40"
+                  className="w-full py-5 text1 bg-black text-white text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:opacity-90 transition-all disabled:opacity-40"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   Add to Cart
@@ -155,7 +155,7 @@ const isFavorite = favorites.find((p) => p._id === product._id);
 
 <button
   onClick={toggleFavoriteHandler}
-  className="w-full py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all"
+  className="w-full text1 py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all"
 >
   <Heart
     className={`w-4 h-4 transition-colors ${
@@ -169,11 +169,11 @@ const isFavorite = favorites.find((p) => p._id === product._id);
 
               {/* TRUST */}
               <div className="grid grid-cols-2 gap-4 pt-8 border-t">
-                <div className="flex items-center gap-3 text-xs uppercase tracking-widest">
+                <div className="flex text items-center gap-3 text-xs uppercase tracking-widest">
                   <Truck className="w-4 h-4" />
                   Free Shipping
                 </div>
-                <div className="flex items-center gap-3 text-xs uppercase tracking-widest">
+                <div className="flex text items-center gap-3 text-xs uppercase tracking-widest">
                   <ShieldCheck className="w-4 h-4" />
                   Secure Checkout
                 </div>
@@ -182,7 +182,7 @@ const isFavorite = favorites.find((p) => p._id === product._id);
           </div>
         </div>
         <section className="mt-24 mb-12">
-          <h2 className="text-2xl font-serif mb-8">You may also like</h2>
+          <h2 className="text-2xl font-serif text1 mb-8">You may also like</h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {otherProducts.map((p) => (

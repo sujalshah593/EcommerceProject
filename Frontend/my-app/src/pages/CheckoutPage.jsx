@@ -113,26 +113,26 @@ const CheckoutPage = () => {
           <div className="flex items-center justify-between mb-12">
             <Link
               to="/cart"
-              className="text-sm text-black font-serif hover:text-black transition"
+              className="text-sm text text-black font-serif hover:text-black transition"
             >
               ← Back to Cart
             </Link>
 
-            <h1 className="font-serif text-4xl tracking-wide">Checkout</h1>
+            <h1 className="font-serif text-4xl tracking-wide text1">Checkout</h1>
 
             {/* spacer to keep title centered */}
             <div className="w-24"></div>
           </div>
-          <div className="flex gap-8 mb-12 font-serif">
+          <div className="flex text gap-8 mb-12 font-serif">
             {["shipping", "payment"].map((step, i) => (
               <div
                 key={step}
                 className={`flex flex-col items-center ${
                   orderStep === step ? "text-black" : "text-gray-400"
                 }`}
-              >
+              > 
                 <div
-                  className={`w-10 h-10 rounded-full border flex items-center justify-center mb-2 ${
+                  className={`w-10 h-10 text1 rounded-full border flex items-center justify-center mb-2 ${
                     orderStep === step
                       ? "border-black bg-black/10"
                       : "border-gray-300"
@@ -150,11 +150,11 @@ const CheckoutPage = () => {
               <form onSubmit={handleSubmit} className="space-y-8">
                 {orderStep === "shipping" && (
                   <>
-                    <h2 className="font-serif text-2xl mb-6">
+                    <h2 className="font-serif text1 text-2xl mb-6">
                       Shipping Address
                     </h2>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid text grid-cols-2 gap-4">
                       <input
                         name="firstName"
                         placeholder="First Name"
@@ -179,7 +179,7 @@ const CheckoutPage = () => {
                       placeholder="Email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="border px-4 py-3 w-full"
+                      className="border text px-4 py-3 w-full"
                       required
                     />
 
@@ -188,7 +188,7 @@ const CheckoutPage = () => {
                       placeholder="Phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="border px-4 py-3 w-full"
+                      className="border text px-4 py-3 w-full"
                       required
                     />
 
@@ -197,7 +197,7 @@ const CheckoutPage = () => {
                       placeholder="Address"
                       value={formData.address}
                       onChange={handleInputChange}
-                      className="border px-4 py-3 w-full"
+                      className="border text px-4 py-3 w-full"
                       required
                     />
 
@@ -207,7 +207,7 @@ const CheckoutPage = () => {
                         placeholder="City"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className="border px-4 py-3"
+                        className="border text px-4 py-3"
                         required
                       />
                       <input
@@ -215,7 +215,7 @@ const CheckoutPage = () => {
                         placeholder="State"
                         value={formData.state}
                         onChange={handleInputChange}
-                        className="border px-4 py-3"
+                        className="border text px-4 py-3"
                         required
                       />
                     </div>
@@ -225,7 +225,7 @@ const CheckoutPage = () => {
                       placeholder="ZIP Code"
                       value={formData.zipCode}
                       onChange={handleInputChange}
-                      className="border px-4 py-3 w-full"
+                      className="border text px-4 py-3 w-full"
                       required
                     />
                   </>
@@ -233,7 +233,7 @@ const CheckoutPage = () => {
 
                 {orderStep === "payment" && (
                   <>
-                    <h2 className="font-serif text-2xl mb-6">
+                    <h2 className="font-serif text1 text-2xl mb-6">
                       Payment Information
                     </h2>
 
@@ -242,7 +242,7 @@ const CheckoutPage = () => {
                       placeholder="Card Number"
                       value={formData.cardNumber}
                       onChange={handleInputChange}
-                      className="border px-4 py-3 w-full"
+                      className="border px-4 text py-3 w-full"
                       required
                     />
 
@@ -252,7 +252,7 @@ const CheckoutPage = () => {
                         placeholder="MM/YY"
                         value={formData.expiry}
                         onChange={handleInputChange}
-                        className="border px-4 py-3"
+                        className="border text px-4 py-3"
                         required
                       />
                       <input
@@ -260,7 +260,7 @@ const CheckoutPage = () => {
                         placeholder="CVV"
                         value={formData.cvc}
                         onChange={handleInputChange}
-                        className="border px-4 py-3"
+                        className="border text px-4 py-3"
                         required
                       />
                     </div>
@@ -272,14 +272,14 @@ const CheckoutPage = () => {
                     <button
                       type="button"
                       onClick={() => setOrderStep("shipping")}
-                      className="flex-1 border py-3"
+                      className="flex-1 text1 border py-3"
                     >
                       Back
                     </button>
                   )}
                   <button
                     type="submit"
-                    className="flex-1 bg-black text-white py-3 uppercase tracking-wider"
+                    className="flex-1 text1 bg-black text-white py-3 uppercase tracking-wider"
                   >
                     {orderStep === "shipping"
                       ? "Continue to Payment"
@@ -291,9 +291,9 @@ const CheckoutPage = () => {
 
             <div className="lg:col-span-1">
               <div className="bg-gray-100 p-8 sticky top-24">
-                <h2 className="font-serif font-bold text-xl mb-6">Order Summary</h2>
+                <h2 className="font-serif font-bold text-xl text1 mb-6">Order Summary</h2>
 
-                <div className="space-y-3 mb-6 font-serif">
+                <div className="space-y-3 text mb-6 font-serif">
                   <div className="flex justify-between text-sm">
                     <span>Subtotal</span>
                     <span>₹{subtotal}</span>
@@ -308,7 +308,7 @@ const CheckoutPage = () => {
                   </div>
                 </div>
 
-                <div className="border-t font-serif pt-4 flex justify-between">
+                <div className="border-t text1 font-serif pt-4 flex justify-between">
                   <span className="font-bold">Total</span>
                   <span className="text-2xl">₹{total}</span>
                 </div>

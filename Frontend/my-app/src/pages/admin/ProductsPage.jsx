@@ -21,11 +21,13 @@ const ProductsPage = () => {
   const updateHandler = async (p) => {
     const name = prompt("Name", p.name);
     const price = prompt("Price", p.price);
+    const image = prompt("Image URL", p.image);
     if (!name || !price) return;
 
     const { data } = await api.put(`/admin/products/${p._id}`, {
       name,
       price: Number(price),
+      image,
     });
 
     setProducts((prev) => prev.map((x) => (x._id === p._id ? data : x)));
@@ -44,11 +46,11 @@ const ProductsPage = () => {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-serif font-bold text-white">Products</h1>
-          <p className="text-slate-400 mt-2">Manage your product inventory</p>
+          <h1 className="text-4xl font-serif font-bold text-white text1">Products</h1>
+          <p className="text-slate-400 mt-2 text">Manage your product inventory</p>
         </div>
         <Link to="/admin/add-product">
-          <button className="bg-purple-600 font-serif hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2">
+          <button className="bg-purple-600 text1 font-serif hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center gap-2">
             <Plus className="w-5 h-5" /> Add Product
           </button>
         </Link>
@@ -65,8 +67,8 @@ const ProductsPage = () => {
       </div>
 
       <div className="bg-slate-800 font-serif rounded-lg border border-slate-700 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-slate-900">
+        <table className="w-full ">
+          <thead className="bg-slate-900 text1">
             <tr>
               <th className="px-6 py-4 text-left">Name</th>
               <th className="px-6 py-4 text-left">Category</th>
@@ -79,7 +81,7 @@ const ProductsPage = () => {
             {filtered.map((p) => (
               <tr
                 key={p._id}
-                className="border-b border-slate-700 hover:bg-slate-700/50"
+                className="border-b text border-slate-700 hover:bg-slate-700/50"
               >
                 <td className="px-6 py-4">{p.name}</td>
                 <td className="px-6 py-4">{p.category || "-"}</td>
