@@ -10,33 +10,51 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, Suspense, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
-import {
-  fetchProducts,
-  resetProducts,
-} from "../Redux/Slices/productSlice.js";
+import { fetchProducts, resetProducts } from "../Redux/Slices/productSlice.js";
 import TruckLoader from "../components/TruckLoader.jsx";
 import Navbar from "../components/Navbar.jsx";
-
 
 const MensContent = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const fetchedPages = useRef(new Set());
+  const [sortBy, setSortBy] = useState("default");
 
   const { products, loading, error, pages } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
 
-  const mensProducts = products.filter(
-    (p) => p.targetGroup === "Men"
-  );
+  const mensProducts = [...products]
+    .filter((p) => p.targetGroup === "Men")
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "priceAsc":
+          return a.price - b.price;
+        case "priceDesc":
+          return b.price - a.price;
+        case "nameAsc":
+          return a.name.localeCompare(b.name);
+        case "nameDesc":
+          return b.name.localeCompare(a.name);
+        case "newest":
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        default:
+          return 0;
+      }
+    });
 
   useEffect(() => {
     dispatch(resetProducts());
     fetchedPages.current.clear();
     setPage(1);
   }, [dispatch]);
+
+  useEffect(() => {
+    const close = () => setSortOpen(false);
+    window.addEventListener("click", close);
+    return () => window.removeEventListener("click", close);
+  }, []);
 
   useEffect(() => {
     if (!fetchedPages.current.has(page)) {
@@ -83,7 +101,7 @@ const MensContent = () => {
           </Link>
         </div> */}
       {/* </nav> */}
-      <Navbar/>
+      <Navbar />
 
       <main className="pt-24 md:pt-32">
         <section className="sticky top-[72px] z-40 bg-white/95 backdrop-blur border-b px-6 md:px-12 py-4">
@@ -97,8 +115,11 @@ const MensContent = () => {
 
             <div className="relative">
               <button
-                onClick={() => setSortOpen(!sortOpen)}
-                className="flex text1 items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSortOpen(!sortOpen);
+                }}
+                className="flex text1 hover:bg-gray-200 hover:cursor-pointer px-4 py-2 items-center gap-2 text-[10px] font-bold uppercase tracking-widest"
               >
                 Sort By
                 <ChevronDown
@@ -107,12 +128,35 @@ const MensContent = () => {
                   }`}
                 />
               </button>
+              {sortOpen && (
+                <div className="absolute right-0 text mt-3 w-44 bg-white border shadow-lg z-50 text-[10px] uppercase font-bold tracking-widest">
+                  {[
+                    { label: "Default", value: "default" },
+                    { label: "Price: Low to High", value: "priceAsc" },
+                    { label: "Price: High to Low", value: "priceDesc" },
+                    { label: "Name: A to Z", value: "nameAsc" },
+                    { label: "Name: Z to A", value: "nameDesc" },
+                    { label: "Newest First", value: "newest" },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => {
+                        setSortBy(opt.value);
+                        setSortOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-3 hover:bg-gray-100"
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
 
         <section className="px-6 md:px-12 py-16 max-w-7xl mx-auto">
-          {loading && <TruckLoader/>}
+          {loading && <TruckLoader />}
           {error && <p className="text-red-500">{error}</p>}
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-16 md:gap-x-8">

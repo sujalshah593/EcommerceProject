@@ -24,9 +24,6 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden text lg:flex text-[13px] gap-8  uppercase font-bold tracking-widest text-gray-500">
-          <Link to="/new-arrivals" className="hover:text-black">
-            New Arrivals
-          </Link>
           <Link to="/Boys" className="hover:text-black">
             Boys
           </Link>

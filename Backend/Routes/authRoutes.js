@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { registerUser, loginUser } from "../Controller/authController.js";
+import { registerUser, loginUser, verifyOtp, resendOtp } from "../Controller/authController.js";
 import generateToken from "../utils/generateToken.js";
 
 const router = express.Router();
@@ -8,12 +8,16 @@ const router = express.Router();
 /* Manual Auth */
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+router.post("/verify-otp", verifyOtp);
+router.post("/resend-otp", resendOtp);
 
 /* Google Auth */
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
+
+
 
 router.get(
   "/google/callback",
