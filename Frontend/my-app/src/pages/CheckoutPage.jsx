@@ -7,13 +7,19 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { toastSuccess } from "../utils/toast.js";
 import { Trash } from "lucide-react";
+import { toast } from "react-toastify";
+import Lottie from "lottie-react";
+import orderProcessing from "../animations/orderProcessing.json";
+import { useEffect } from "react";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [formError, setFormError] = useState("");
+  const [placingOrder, setPlacingOrder] = useState(false);
 
   const { cartItems } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.auth || {}); 
+  const { user } = useSelector((state) => state.auth || {});
 
   const [orderStep, setOrderStep] = useState("shipping");
 
@@ -40,16 +46,16 @@ const CheckoutPage = () => {
     const { firstName, email, phone, address, city, zipCode } = formData;
 
     if (!firstName || !email || !phone || !address || !city || !zipCode) {
-      alert("Please fill all required shipping fields");
+      setFormError("Please fill all required shipping details.");
       return false;
     }
+    setFormError("");
     return true;
   };
 
-
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.qty * item.price,
-    0
+    0,
   );
   const tax = Math.round(subtotal * 0.1);
   const shipping = 0;
@@ -61,6 +67,7 @@ const CheckoutPage = () => {
     // STEP 1 — shipping
     if (orderStep === "shipping") {
       if (!validateShipping()) return;
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setOrderStep("payment");
       return;
     }
@@ -83,15 +90,25 @@ const CheckoutPage = () => {
         },
         totalPrice: total,
       };
-
+      setPlacingOrder(true);
       await api.post("/orders", orderPayload);
 
       dispatch(clearCart());
-      toastSuccess("Login successfully!");
-      navigate("/");
+      toastSuccess("Order Placed Successfully!");
+      setTimeout(() => {
+        setPlacingOrder(false);
+        navigate("/");
+      }, 2800);
     } catch (error) {
       console.error("Checkout error:", error.response?.data || error.message);
-      alert(error.response?.data?.message || "Order failed");
+      toast.error(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 2000,
+        },
+      );
     }
   };
 
@@ -100,15 +117,6 @@ const CheckoutPage = () => {
       <Navbar />
 
       <div className="min-h-screen bg-white">
-        {/* <nav className="border-b sticky top-0 bg-white/95 backdrop-blur z-40">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between">
-            <Link to="/" className="font-serif text-2xl tracking-wider">
-              VÉRO
-            </Link>
-            
-          </div>
-        </nav> */}
-
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="flex items-center justify-between mb-12">
             <Link
@@ -118,7 +126,9 @@ const CheckoutPage = () => {
               ← Back to Cart
             </Link>
 
-            <h1 className="font-serif text-4xl tracking-wide text1">Checkout</h1>
+            <h1 className="font-serif text-4xl tracking-wide text1">
+              Checkout
+            </h1>
 
             {/* spacer to keep title centered */}
             <div className="w-24"></div>
@@ -130,7 +140,7 @@ const CheckoutPage = () => {
                 className={`flex flex-col items-center ${
                   orderStep === step ? "text-black" : "text-gray-400"
                 }`}
-              > 
+              >
                 <div
                   className={`w-10 h-10 text1 rounded-full border flex items-center justify-center mb-2 ${
                     orderStep === step
@@ -148,6 +158,12 @@ const CheckoutPage = () => {
           <div className="grid grid-cols-1 font-serif lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
               <form onSubmit={handleSubmit} className="space-y-8">
+                {formError && (
+                  <p className="text-sm text-red-500 tracking-wide">
+                    {formError}
+                  </p>
+                )}
+
                 {orderStep === "shipping" && (
                   <>
                     <h2 className="font-serif text1 text-2xl mb-6">
@@ -267,6 +283,25 @@ const CheckoutPage = () => {
                   </>
                 )}
 
+                {placingOrder && (
+                  <div className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center">
+                    <div className="w-64 h-64">
+                      <Lottie
+                        animationData={orderProcessing}
+                        autoplay
+                        loop={false}
+                        rendererSettings={{
+                          preserveAspectRatio: "xMidYMid slice",
+                        }}
+                      />
+                    </div>
+
+                    <p className="mt-6 text1 text-xs font-serif uppercase tracking-[0.3em] text-gray-700">
+                      Processing your order
+                    </p>
+                  </div>
+                )}
+
                 <div className="flex gap-4 pt-8">
                   {orderStep === "payment" && (
                     <button
@@ -291,7 +326,9 @@ const CheckoutPage = () => {
 
             <div className="lg:col-span-1">
               <div className="bg-gray-100 p-8 sticky top-24">
-                <h2 className="font-serif font-bold text-xl text1 mb-6">Order Summary</h2>
+                <h2 className="font-serif font-bold text-xl text1 mb-6">
+                  Order Summary
+                </h2>
 
                 <div className="space-y-3 text mb-6 font-serif">
                   <div className="flex justify-between text-sm">
