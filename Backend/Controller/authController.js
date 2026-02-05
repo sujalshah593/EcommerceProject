@@ -3,7 +3,8 @@ import User from "../Models/User.js";
 import generateToken from "../utils/generateToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import generateOTP from "../utils/generateOtp.js";
-
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 // REGISTER
 export const registerUser = async (req, res) => {
@@ -108,4 +109,89 @@ export const resendOtp = async (req, res) => {
   });
 
   res.json({ message: "OTP resent" });
+};
+
+
+
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Current password is incorrect" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+user.password = await bcrypt.hash(req.body.password, salt);
+
+    await user.save();
+
+    res.json({ message: "Password changed successfully" });
+  } catch (error) {
+    console.error("CHANGE PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+  if(!user) return res.status(404).json({ message: "User not found"});
+
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  user.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+    
+  user.resetPasswordExpire = Date.now() + 60 * 60 * 1000; // 1 hour
+  await user.save();
+const resetUrl = `http://localhost:5173/login?resetToken=${resetToken}`;
+
+  await sendEmail({
+    to: user.email,
+    subject: "Password Reset Request",
+    html: `
+      <p>You requested a password reset. Click the link below to reset your password:</p>
+      <a href="${resetUrl}">${resetUrl}</a>
+      <p>This link is valid for 1 hour.</p>
+    `,
+  }); 
+  res.json({ message: "Password reset email sent" });
+}
+
+export const resetPassowrd = async (req, res) => {
+  const resetToken = crypto
+    .createHash("sha256")
+    .update(req.params.resetToken)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken: resetToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  })
+
+  if(!user) return res.status(400).json({ message: "Invalid or expired token"});
+
+user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+  res.json({ message: "Password reset successful" });
 };

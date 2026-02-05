@@ -1,5 +1,6 @@
 import React from 'react';
 import { Instagram, Facebook, Twitter, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom';
 
 const FooterSection = () => {
   return (
@@ -25,24 +26,14 @@ const FooterSection = () => {
               <h5 className="text-[10px] text1 font-bold uppercase tracking-[0.3em] text-zinc-500">Shop</h5>
               <ul className="space-y-4 text-[10px] uppercase text tracking-widest font-bold">
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <Link to="/boys" className="hover:text-accent transition-colors">
                     Boys
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <Link to="/men" className="hover:text-accent transition-colors">
                     Men
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-accent transition-colors">
-                    New Arrivals
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-accent transition-colors">
-                    Exclusives
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -51,24 +42,19 @@ const FooterSection = () => {
               <h5 className="text-[10px] font-bold uppercase tracking-[0.3em] text1 text-zinc-500">About</h5>
               <ul className="space-y-4 text-[10px] uppercase text tracking-widest font-bold">
                 <li>
-                  <a href="#" className="hover:text-accent  transition-colors">
+                  <Link to="/about-us" className="hover:text-accent  transition-colors">
                     Journal
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
-                    Bespoke
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <Link to="/about-us" className="hover:text-accent transition-colors">
                     Owner
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <Link to="/about-us" className="hover:text-accent transition-colors">
                     Careers
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -80,18 +66,18 @@ const FooterSection = () => {
                   support@vero.com
                 </p>
                 <div className="grid text1 grid-cols-2 gap-4 text-[10px] uppercase tracking-widest font-bold text-zinc-400">
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link to="/privacy-policy" className="hover:text-white transition-colors">
                     Shipping
-                  </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  </Link>
+                  <Link to="/privacy-policy" className="hover:text-white transition-colors">
                     Exchanges
-                  </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  </Link>
+                  <Link to="/privacy-policy" className="hover:text-white transition-colors">
                     Sustainability
-                  </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  </Link>
+                  <Link to="/privacy-policy" className="hover:text-white transition-colors">
                     Privacy Policy
-                  </a>
+                  </Link  >
                 </div>
               </div>
             </div>

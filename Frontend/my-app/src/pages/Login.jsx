@@ -1,24 +1,28 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
-import { toastSuccess, toastError } from "../utils/toast";
+import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { Eye, EyeClosed } from "lucide-react";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [step, setStep] = useState("LOGIN"); // LOGIN | OTP | FORGOT | RESET
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const [step, setStep] = useState("LOGIN"); 
   const [otp, setOtp] = useState("");
   const [otpData, setOtpData] = useState(null);
+  const [resetToken, setResetToken] = useState("");
   const [timer, setTimer] = useState(60);
+  const location = useLocation();
 
-  const { login } = useAuth();
-  const navigate = useNavigate();
 
+  /* ================= TIMER ================= */
   const startTimer = () => {
     let t = 60;
     setTimer(t);
@@ -29,40 +33,49 @@ const Login = () => {
     }, 1000);
   };
 
+  useEffect(() => {
+  const params = new URLSearchParams(location.search);
+  const token = params.get("resetToken");
+
+  if (token) {
+    setResetToken(token);
+    setStep("RESET");
+  }
+}, [location.search]);
+
+
+  /* ================= LOGIN ================= */
   const submitHandler = async (e) => {
     e.preventDefault();
-
     try {
       const { data } = await api.post("/auth/login", { email, password });
-
       login(data);
-      toastSuccess("Login successfully!");
+      toast.success("Login successful");
       navigate("/");
-    } catch (error) {
-      if (error.response?.data?.requiresOtp) {
-        setOtpData(error.response.data);
+    } catch (err) {
+      if (err.response?.data?.requiresOtp) {
+        setOtpData(err.response.data);
         setStep("OTP");
         startTimer();
-        toastSuccess("OTP sent to your email");
+        toast.success("OTP sent to email");
       } else {
-        toastError(error.response?.data?.message || "Login failed");
+        toast.error(err.response?.data?.message || "Login failed");
       }
     }
   };
 
-
+  /* ================= OTP ================= */
   const verifyOtpHandler = async () => {
     try {
       await api.post("/auth/verify-otp", {
         userId: otpData.userId,
         otp,
       });
-
-      toastSuccess("OTP verified! Please login again.");
+      toast.success("OTP verified. Login again.");
       setStep("LOGIN");
       setOtp("");
-    } catch (err) {
-      toastError("Invalid OTP");
+    } catch {
+      toast.error("Invalid OTP");
     }
   };
 
@@ -70,9 +83,35 @@ const Login = () => {
     try {
       await api.post("/auth/resend-otp", { email });
       startTimer();
-      toastSuccess("OTP resent");
+      toast.success("OTP resent");
     } catch {
-      toastError("Failed to resend OTP");
+      toast.error("Failed to resend OTP");
+    }
+  };
+
+  /* ================= FORGOT ================= */
+  const forgotHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await api.post("/auth/forgot-password", { email });
+      setResetToken(data.token);
+      setStep("RESET");
+      toast.success("Reset link verified");
+    } catch {
+      toast.error("Email not found");
+    }
+  };
+
+  /* ================= RESET ================= */
+  const resetHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await api.post(`/auth/reset-password/${resetToken}`, { password });
+      toast.success("Password reset successful");
+      setPassword("");
+      setStep("LOGIN");
+    } catch {
+      toast.error("Invalid or expired token");
     }
   };
 
@@ -81,132 +120,147 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f7f3ee] px-4 relative">
-      <Link
-        to="/"
-        className="absolute top-6 left-6 text-sm text-gray-700 hover:underline"
-      >
-        ← Back to store
-      </Link>
-
+    <div className="min-h-screen flex items-center justify-center bg-[#f7f3ee] px-4">
+      <Link to="/" className="absolute text top-6 left-6 text-sm text-gray-700 hover:underline" > ← Back to store </Link>
       <div className="w-full max-w-sm">
-        <h1 className="text-3xl font-serif text-center mb-2">
-          Welcome Back
+        <h1 className="text-3xl text1 font-serif text-center mb-6">
+          {step === "LOGIN" && "Welcome Back"}
+          {step === "FORGOT" && "Forgot Password"}
+          {step === "RESET" && "Reset Password"}
+          {step === "OTP" && "Verify OTP"}
         </h1>
+        <p className="text text-center mt-[-12px] mb-4"> Log in to continue shopping with ease </p>
 
-        <p className="text-sm text-gray-600 text-center mb-6">
-          Enter your email to sign in to your account
-        </p>
-
-        <form onSubmit={submitHandler} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+        {/* ================= LOGIN ================= */}
+        {step === "LOGIN" && (
+          <form onSubmit={submitHandler} className="space-y-4">
+            <label className="block text-sm font-medium mb-1 text1">Email</label>
             <input
               type="email"
-              placeholder="name@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
               required
-              disabled={step === "OTP"}
-              className="w-full px-3 py-2 border border-gray-300 bg-transparent focus:outline-none focus:ring-1 focus:ring-black disabled:opacity-60"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full text border px-3 py-2"
             />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Password
-            </label>
 
             <div className="relative">
+               <label className="block text-sm font-medium mb-1 text1">Password</label>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
                 required
-                disabled={step === "OTP"}
-                className="w-full px-3 py-2 pr-10 border border-gray-300 bg-transparent focus:outline-none focus:ring-1 focus:ring-black disabled:opacity-60"
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border text px-3 py-2 pr-10"
               />
-
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
+                className="absolute right-3 top-11 -translate-y-1/2"
               >
-                {showPassword ? <EyeClosed size={20} /> : <Eye size={20} />}
+                {showPassword ? <EyeClosed /> : <Eye />}
               </button>
             </div>
-          </div>
 
-          {step === "OTP" && (
-            <div className="space-y-3">
-              <label className="block text-sm font-medium">
-                Enter OTP
-              </label>
-              <input
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="6-digit OTP"
-                className="w-full px-3 py-2 border border-gray-300 focus:ring-1 focus:ring-black"
-              />
-
-              <button
-                type="button"
-                onClick={verifyOtpHandler}
-                className="w-full py-3 bg-black text-white font-medium"
-              >
-                Verify OTP
-              </button>
-
-              {timer > 0 ? (
-                <p className="text-xs text-gray-500 text-center">
-                  Resend OTP in {timer}s
-                </p>
-              ) : (
-                <button
-                  type="button"
-                  onClick={resendOtpHandler}
-                  className="text-xs underline text-center w-full"
-                >
-                  Resend OTP
-                </button>
-              )}
-            </div>
-          )}
-
-          {step === "LOGIN" && (
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white font-medium hover:opacity-90"
-            >
+            <button className="w-full text1 bg-black text-white py-3">
               Sign In
             </button>
-          )}
-        </form>
 
-        {/* GOOGLE */}
+            <button
+              type="button"
+              onClick={() => setStep("FORGOT")}
+              className="text-sm text underline w-full"
+            >
+              Forgot password?
+            </button>
+          </form>
+        )}
+
+        {step === "FORGOT" && (
+          <form onSubmit={forgotHandler} className="space-y-4">
+            <input
+              type="email"
+              placeholder="Registered email"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full text border px-3 py-2"
+            />
+            <button className="w-full text1 bg-black text-white py-3">
+              Continue
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep("LOGIN")}
+              className="text-sm text underline w-full"
+            >
+              Back to login
+            </button>
+          </form>
+        )}
+
+        {/* ================= RESET ================= */}
+        {step === "RESET" && (
+          <form onSubmit={resetHandler} className="space-y-4">
+            <input
+              type="password"
+              placeholder="New password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border text px-3 py-2"
+            />
+            <button className="w-full text1 bg-black text-white py-3">
+              Reset Password
+            </button>
+          </form>
+        )}
+
+        {/* ================= OTP ================= */}
+        {step === "OTP" && (
+          <div className="space-y-4">
+            <input
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="w-full text border px-3 py-2"
+            />
+            <button
+              onClick={verifyOtpHandler}
+              className="w-full text1 bg-black text-white py-3"
+            >
+              Verify OTP
+            </button>
+
+            {timer > 0 ? (
+              <p className="text-xs text text-center">Resend in {timer}s</p>
+            ) : (
+              <button
+                onClick={resendOtpHandler}
+                className="text-xs underline w-full"
+              >
+                Resend OTP
+              </button>
+            )}
+          </div>
+        )}
+
         {step === "LOGIN" && (
           <>
             <div className="flex items-center my-6">
               <div className="flex-grow border-t" />
-              <span className="px-2 text-xs text-gray-500 uppercase">
-                Or continue with
-              </span>
+              <span className="px-2 text-xs text">OR</span>
               <div className="flex-grow border-t" />
             </div>
 
             <button
               onClick={googleLogin}
-              className="w-full py-3 border border-gray-300 flex items-center justify-center gap-2"
+              className="w-full border py-3 text1 flex justify-center gap-2"
             >
-              <FcGoogle size={22} />
-              Continue with Google
+              <FcGoogle /> Continue with Google
             </button>
           </>
         )}
 
-        <p className="text-sm text-center text-gray-600 mt-6">
-          Don&apos;t have an account?{" "}
+        <p className="text-sm text text-center mt-6">
+          Don’t have an account?{" "}
           <Link to="/register" className="underline">
             Sign Up
           </Link>

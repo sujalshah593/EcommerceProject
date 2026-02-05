@@ -21,6 +21,8 @@ import DashboardPage from "./pages/admin/DashboardPage";
 import BoysPage from "./pages/BoysPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import PrivacyPolicyPage from "./pages/Privacy";
+import AboutPage from "./pages/AboutPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const App = () => {
   return (
@@ -31,6 +33,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/auth/callback" element={<OAuthCallback />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/about-us" element={<AboutPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/"
           element={

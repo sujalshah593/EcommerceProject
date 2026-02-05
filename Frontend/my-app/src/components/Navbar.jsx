@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-
 const Navbar = () => {
   const { user, logout } = useAuth();
   const { cartItems } = useSelector((state) => state.cart);
@@ -29,6 +28,9 @@ const Navbar = () => {
           </Link>
           <Link to="/Mens" className="hover:text-black">
             Men
+          </Link>
+          <Link to="/about-us" className="hover:text-black">
+            About Us
           </Link>
           <Link to="/privacy-policy" className="hover:text-black">
             Privacy Policy
@@ -91,6 +93,9 @@ const Navbar = () => {
                 <Link to="/Boys" onClick={() => setMobileOpen(false)}>
                   Boys
                 </Link>
+                <Link to="/about-us" onClick={() => setMobileOpen(false)}>
+                  About Us
+                </Link>
                 <Link to="/privacy-policy" className="hover:text-black">
                   Privacy Policy
                 </Link>
@@ -144,6 +149,16 @@ const Navbar = () => {
 
             {open && (
               <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg z-50">
+                <Link to="/profile">
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  className="w-full text-left text1 px-4 py-3 font-serif text-xs hover:bg-gray-100"
+                  >
+                  Profile
+                </button>
+                  </Link>
                 <button
                   onClick={() => {
                     logout();
@@ -174,9 +189,13 @@ const Navbar = () => {
             <div className="absolute right-0 top-0 h-full w-[100%] max-w-md bg-white shadow-xl flex flex-col">
               <div className="flex items-center justify-between px-6 py-4 border-b">
                 <span className="text-xl flex gap-3 font-bold uppercase tracking-widest">
-                  <Search className="w-5 h-7"/>Search
+                  <Search className="w-5 h-7" />
+                  Search
                 </span>
-                <button className="hover:bg-gray-300 hover:rounded-full  hover:cursor-pointer p-3" onClick={() => setSearchOpen(false)}>
+                <button
+                  className="hover:bg-gray-300 hover:rounded-full  hover:cursor-pointer p-3"
+                  onClick={() => setSearchOpen(false)}
+                >
                   <X className="w-5 h-5" />
                 </button>
               </div>

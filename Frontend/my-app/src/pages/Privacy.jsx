@@ -1,6 +1,5 @@
-'use client'
-
 import Navbar from "../components/Navbar"
+import FooterSection from "../components/FooterSection"
 
 export default function PrivacyPolicyPage() {
   return (
@@ -244,6 +243,7 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
     </div>
+    <FooterSection/>
     </>
   )
 }

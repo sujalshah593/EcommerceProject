@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true, // OK for manual users
+      required: true, 
     },
     googleId: String,
     isAdmin: {
@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema(
     isVerified: { type: Boolean, default: false },
     otp: String,
     otpExpires: Date,
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
 
   },
   { timestamps: true }
@@ -31,8 +33,9 @@ const userSchema = new mongoose.Schema(
 
 
 userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
+  if (!this.isModified("password")) return ;
   this.password = await bcrypt.hash(this.password, 10);
+  
 });
 
 // 🔑 Match password
