@@ -171,7 +171,6 @@ export const getDashboardStats = async (req, res) => {
       revenueTrendData,
       monthlyOrderData,
 
-      // 👇 use this in PieChart
       salesByTargetGroup,
     });
   } catch (error) {

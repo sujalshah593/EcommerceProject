@@ -109,7 +109,7 @@ const Navbar = () => {
                       <div className="text">
                         <Link
                           to="/profile"
-                          className="text"
+                          className="text1 bg-black text-white px-7 py-3 "
                           onClick={() => setMobileOpen(false)}
                         >
                           Profile
@@ -150,15 +150,14 @@ const Navbar = () => {
             {open && (
               <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg z-50">
                 <Link to="/profile">
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                  className="w-full text-left text1 px-4 py-3 font-serif text-xs hover:bg-gray-100"
+                  <Link
+                    to="/profile"
+                    onClick={() => setOpen(false)}
+                    className="block w-full text-left text1 px-4 py-3 text-xs font-serif hover:bg-gray-100"
                   >
-                  Profile
-                </button>
+                    Profile
                   </Link>
+                </Link>
                 <button
                   onClick={() => {
                     logout();

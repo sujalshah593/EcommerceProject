@@ -2,15 +2,19 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
-import { LogOut, ChevronRight, Edit2, MapPin } from "lucide-react";
+import { LogOut, ChevronRight, Edit2, MapPin, Trash } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { logout, userUpdate } from "../Redux/Slices/authSlice";
+import { fetchMyOrders } from "../Redux/Slices/orderSlice.js";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { orders, loading } = useSelector((state) => state.orders);
   const { user } = useSelector((state) => state.auth || {});
+  const addresses = user?.addresses || [];
   const [activeTab, setActiveTab] = useState("account");
   const [isEditing, setIsEditing] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -21,6 +25,16 @@ const ProfilePage = () => {
   });
   const [passwordError, setPasswordError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [addressForm, setAddressForm] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "India",
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -50,13 +64,10 @@ const ProfilePage = () => {
     try {
       await api.post(
         "/auth/change-password",
-        {
-          currentPassword,
-          newPassword,
-        },
+        { currentPassword, newPassword },
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         },
       );
@@ -73,6 +84,47 @@ const ProfilePage = () => {
     }
   };
 
+  const handleAddressChange = (e) => {
+    setAddressForm({
+      ...addressForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const addAddressHandler = async () => {
+    const { data } = await api.post("/auth/address", addressForm, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    toast.success("Address added successfully");
+
+    dispatch(
+      userUpdate({
+        ...user,
+        addresses: data, // because your backend returns array
+      }),
+    );
+
+    setShowForm(false);
+  };
+
+  const deleteAddressHandler = async (id) => {
+    const { data } = await api.delete(`/auth/address/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    toast.success("Address deleted successfully");
+
+    dispatch(
+      userUpdate({
+        ...user,
+        addresses: data,
+      }),
+    );
+  };
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -81,6 +133,12 @@ const ProfilePage = () => {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (activeTab === "orders") {
+      dispatch(fetchMyOrders());
+    }
+  }, [activeTab, dispatch]);
 
   useEffect(() => {
     if (!user) {
@@ -289,20 +347,190 @@ const ProfilePage = () => {
               )}
 
               {activeTab === "orders" && (
-                <p className="text-gray-500 text1">
-                  Orders will appear here after purchase.
-                </p>
+                <div>
+                  <h2 className="text-2xl text1 text1 font-serif mb-8">
+                    Order History
+                  </h2>
+
+                  {loading && <p>Loading orders...</p>}
+
+                  {!loading && orders.length === 0 && (
+                    <p className="text-gray-500">
+                      You haven’t placed any orders yet.
+                    </p>
+                  )}
+
+                  <div className="space-y-6">
+                    {orders.map((order) => (
+                      <div
+                        key={order._id}
+                        className="border p-6 hover:shadow-md transition"
+                      >
+                        <div className="flex justify-between mb-4">
+                          <div>
+                            <p className="text-xs text1 uppercase text-gray-500">
+                              Order ID
+                            </p>
+                            <p className="font-medium text">{order._id}</p>
+                          </div>
+
+                          <div className="text-right">
+                            <p className="text-xs uppercase text1 text-gray-500">
+                              Status
+                            </p>
+                            <p className="font-semibold text-green-600 text">
+                              {order.isDelivered ? "Delivered" : "Processing"}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex gap-6 mb-4 overflow-x-auto">
+                          {order.orderItems.map((item, i) => (
+                            <div
+                              key={i}
+                              className="flex gap-3 items-center min-w-[180px]"
+                            >
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                onError={(e) => {
+                                  e.target.src = "/placeholder.jpg";
+                                }}
+                                className="w-16 h-20 object-cover border"
+                              />
+
+                              <div className="text-sm">
+                                <p className="font-medium text">{item.name}</p>
+                                <p className="text-gray-500 text">Qty: {item.qty}</p>
+                                <p className="text-gray-500 text">₹{item.price}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="grid grid-cols-3 border-t pt-4 text text-sm">
+                          <div>
+                            <p className="text-gray-500">Date</p>
+                            <p>
+                              {new Date(order.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-gray-500">Items</p>
+                            <p>{order.orderItems.length} items</p>
+                          </div>
+
+                          <div>
+                            <p className="text-gray-500">Total</p>
+                            <p className="font-semibold">₹{order.totalPrice}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
 
               {activeTab === "addresses" && (
-                <div className="border p-6 text1 text flex gap-3">
-                  <MapPin />
-                  <div>
-                    <p>No addresses saved</p>
-                    <p className="text-sm text text-gray-500">
-                      Add address during checkout
-                    </p>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-serif text1">
+                      Saved Addresses
+                    </h2>
+                    <button
+                      onClick={() => setShowForm(!showForm)}
+                      className="text-xs text uppercase tracking-widest"
+                    >
+                      + Add Address
+                    </button>
                   </div>
+
+                  {showForm && (
+                    <div className="border p-6 space-y-4">
+                      <input
+                        name="name"
+                        placeholder="Full Name"
+                        value={addressForm.name}
+                        onChange={handleAddressChange}
+                        className="w-full text border px-4 py-2"
+                      />
+                      <input
+                        name="phone"
+                        placeholder="Phone"
+                        value={addressForm.phone}
+                        onChange={handleAddressChange}
+                        className="w-full text border px-4 py-2"
+                      />
+                      <input
+                        name="address"
+                        placeholder="Address"
+                        value={addressForm.address}
+                        onChange={handleAddressChange}
+                        className="w-full text border px-4 py-2"
+                      />
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          name="city"
+                          placeholder="City"
+                          value={addressForm.city}
+                          onChange={handleAddressChange}
+                          className="border text px-4 py-2"
+                        />
+                        <input
+                          name="state"
+                          placeholder="State"
+                          value={addressForm.state}
+                          onChange={handleAddressChange}
+                          className="border text px-4 py-2"
+                        />
+                      </div>
+                      <input
+                        name="postalCode"
+                        placeholder="Postal Code"
+                        value={addressForm.postalCode}
+                        onChange={handleAddressChange}
+                        className="w-full text border px-4 py-2"
+                      />
+
+                      <button
+                        onClick={addAddressHandler}
+                        className="bg-black text1 text-white px-6 py-2 text-xs uppercase"
+                      >
+                        Save Address
+                      </button>
+                    </div>
+                  )}
+
+                  {addresses.length === 0 ? (
+                    <div className="border text1 p-6 flex gap-3">
+                      <MapPin />
+                      <p>No addresses saved</p>
+                    </div>
+                  ) : (
+                    addresses.map((a) => (
+                      <div
+                        key={a._id}
+                        className="border p-6 flex justify-between"
+                      >
+                        <div>
+                          <p className="font-medium text1">{a.name}</p>
+                          <p className="text-sm text">{a.address}</p>
+                          <p className="text-sm text">
+                            {a.city}, {a.state} - {a.postalCode}
+                          </p>
+                          <p className="text-sm text">{a.phone}</p>
+                        </div>
+
+                        <button
+                          onClick={() => deleteAddressHandler(a._id)}
+                          className="text-red-500  text-xs uppercase"
+                        >
+                          <Trash className="hover:cursor-pointer hover:transition hover:scale-110" />
+                        </button>
+                      </div>
+                    ))
+                  )}
                 </div>
               )}
             </div>

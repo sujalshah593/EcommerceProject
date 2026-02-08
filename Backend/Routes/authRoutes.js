@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { registerUser, loginUser, verifyOtp, resendOtp, changePassword,forgotPassword, resetPassowrd } from "../Controller/authController.js";
+import { registerUser, loginUser, verifyOtp, resendOtp, changePassword,forgotPassword, resetPassowrd, addAddress, deleteAddress } from "../Controller/authController.js";
 import generateToken from "../utils/generateToken.js";
 
 const router = express.Router();
@@ -17,7 +17,8 @@ router.post(
 );
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:resetToken", resetPassowrd);
-
+router.post("/address", passport.authenticate("jwt", {session: false }), addAddress)
+router.delete("/address/:id", passport.authenticate("jwt", {session: false }), deleteAddress)
 
 /* Google Auth */
 router.get(

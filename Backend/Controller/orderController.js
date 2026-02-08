@@ -51,3 +51,14 @@ export const getAllOrders = async (req, res) => {
         res.status(500).json({message: "Failed to fetch orders"});
     }
 };
+
+export const getMyOrders = async (req, res) => {
+    try{
+        const orders = await Order.find({ user: req.user._id}).sort({
+            createdAt: -1,
+        });
+        res.json(orders);
+    } catch(error){
+        res.status(500).json({ message: "Failed to fetch my orders" });
+    }
+};

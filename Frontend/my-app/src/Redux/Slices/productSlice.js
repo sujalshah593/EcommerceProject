@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk(
       }
 
       const { data } = await api.get(url);
-      console.log("Fetching products:", page, targetGroup);
+
       return data;
     } catch (err) {
       return rejectWithValue(

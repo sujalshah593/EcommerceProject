@@ -1,6 +1,16 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+const addressSchema = new mongoose.Schema({
+  name: String,
+  phone: String,
+  address: String,
+  city: String,
+  state: String,
+  postalCode: String,
+  country: {type: String, default: "India"},
+})
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -21,6 +31,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    addresses: [addressSchema],
     isVerified: { type: Boolean, default: false },
     otp: String,
     otpExpires: Date,
@@ -30,6 +41,8 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
 
 
 userSchema.pre("save", async function () {

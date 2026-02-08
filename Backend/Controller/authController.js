@@ -18,7 +18,7 @@ export const registerUser = async (req, res) => {
 
   await sendEmail({
     to: user.email,
-    subject: "Welcome to Sheeji Cloth Store",
+    subject: "Welcome to Shreeji Cloth Store",
     html: `
         <div style="font-family: Arial, sans-serif;">
           <h2>Welcome, ${user.name}!</h2>
@@ -195,3 +195,22 @@ user.password = req.body.password;
   await user.save();
   res.json({ message: "Password reset successful" });
 };
+
+export const addAddress = async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  user.addresses.push(req.body);
+  await user.save();
+
+  res.json(user.addresses);
+};
+
+export const deleteAddress = async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  user.addresses = user.addresses.filter(
+    (a) => a._id.toString() !== req.params.id
+  );
+  await user.save();
+  res.json(user.addresses);
+}
