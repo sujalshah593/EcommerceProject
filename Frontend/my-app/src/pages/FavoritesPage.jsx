@@ -72,7 +72,6 @@ const FavoritesPage = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
 
-                  {/* Overlay Actions */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-end justify-between p-4">
                     <Link to={`/product/${item._id}`}>
                       <button className="bg-foreground text text-background hover:bg-gray-300 hover:text-white hover:cursor-pointer px-4 py-2 text-sm flex items-center gap-2 rounded-md">

@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { logout, userUpdate } from "../Redux/Slices/authSlice";
 import { fetchMyOrders } from "../Redux/Slices/orderSlice.js";
 import { toast } from "react-toastify";
+import OrderTimeline from "../components/OrderTimeline.jsx";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -364,27 +365,32 @@ const ProfilePage = () => {
                     {orders.map((order) => (
                       <div
                         key={order._id}
-                        className="border p-6 hover:shadow-md transition"
+                        className="border text p-6 hover:shadow-md transition"
                       >
+                        {/* HEADER */}
                         <div className="flex justify-between mb-4">
                           <div>
-                            <p className="text-xs text1 uppercase text-gray-500">
+                            <p className="text-xs uppercase text-gray-500">
                               Order ID
                             </p>
-                            <p className="font-medium text">{order._id}</p>
+                            <p className="font-medium">{order._id}</p>
                           </div>
 
                           <div className="text-right">
-                            <p className="text-xs uppercase text1 text-gray-500">
+                            <p className="text-xs uppercase text-gray-500">
                               Status
                             </p>
-                            <p className="font-semibold text-green-600 text">
-                              {order.isDelivered ? "Delivered" : "Processing"}
+                            <p className="font-semibold text-green-600">
+                              {order.status}
                             </p>
                           </div>
                         </div>
 
-                        <div className="flex gap-6 mb-4 overflow-x-auto">
+                        {/* ✅ TIMELINE — ONLY ONCE */}
+                        <OrderTimeline status={order.status} />
+
+                        {/* PRODUCTS */}
+                        <div className="flex gap-6 mt-6 overflow-x-auto">
                           {order.orderItems.map((item, i) => (
                             <div
                               key={i}
@@ -393,34 +399,29 @@ const ProfilePage = () => {
                               <img
                                 src={item.image}
                                 alt={item.name}
-                                onError={(e) => {
-                                  e.target.src = "/placeholder.jpg";
-                                }}
                                 className="w-16 h-20 object-cover border"
                               />
-
                               <div className="text-sm">
-                                <p className="font-medium text">{item.name}</p>
-                                <p className="text-gray-500 text">Qty: {item.qty}</p>
-                                <p className="text-gray-500 text">₹{item.price}</p>
+                                <p className="font-medium">{item.name}</p>
+                                <p className="text-gray-500">Qty: {item.qty}</p>
+                                <p className="text-gray-500">₹{item.price}</p>
                               </div>
                             </div>
                           ))}
                         </div>
 
-                        <div className="grid grid-cols-3 border-t pt-4 text text-sm">
+                        {/* FOOTER */}
+                        <div className="grid grid-cols-3 border-t pt-4 mt-6 text-sm">
                           <div>
                             <p className="text-gray-500">Date</p>
                             <p>
                               {new Date(order.createdAt).toLocaleDateString()}
                             </p>
                           </div>
-
                           <div>
                             <p className="text-gray-500">Items</p>
-                            <p>{order.orderItems.length} items</p>
+                            <p>{order.orderItems.length}</p>
                           </div>
-
                           <div>
                             <p className="text-gray-500">Total</p>
                             <p className="font-semibold">₹{order.totalPrice}</p>

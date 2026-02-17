@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -16,21 +16,26 @@ import TruckLoader from "../components/TruckLoader.jsx";
 import { toast } from "react-toastify";
 import { toggleFavorite } from "../Redux/Slices/favoriteSlice.js";
 
-
 const ProductPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
   const navigate = useNavigate();
-const { favorites } = useSelector((state) => state.favorite);
-
+  const { favorites } = useSelector((state) => state.favorite);
+  const [selectedSize, setSelectedSize] = useState("");
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails,
   );
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product));
+    if (!selectedSize) {
+      toast.error("Please select a size");
+      return;
+    }
+
+    dispatch(addToCart({ ...product, size: selectedSize }));
+
     toast.success(`${product.name} added to cart`, {
       position: "top-right",
       autoClose: 1500,
@@ -74,27 +79,23 @@ const { favorites } = useSelector((state) => state.favorite);
     .filter((p) => p._id !== product?._id)
     .slice(0, 4);
 
-
-
-
-
-const isFavorite = favorites.find((p) => p._id === product._id);
+  const isFavorite = favorites.find((p) => p._id === product._id);
 
   const toggleFavoriteHandler = () => {
-  dispatch(toggleFavorite(product));
+    dispatch(toggleFavorite(product));
 
-  if (isFavorite) {
-    toast.info(`${product.name} removed from favorites`, {
-      position: "top-right",
-      autoClose: 1500,
-    });
-  } else {
-    toast.success(`${product.name} added to favorites`, {
-      position: "top-right",
-      autoClose: 1500,
-    });
-  }
-};  
+    if (isFavorite) {
+      toast.info(`${product.name} removed from favorites`, {
+        position: "top-right",
+        autoClose: 1500,
+      });
+    } else {
+      toast.success(`${product.name} added to favorites`, {
+        position: "top-right",
+        autoClose: 1500,
+      });
+    }
+  };
 
   return (
     <>
@@ -129,6 +130,27 @@ const isFavorite = favorites.find((p) => p._id === product._id);
               <p className="text-sm text md:text-base text-gray-600 leading-relaxed">
                 {product.description}
               </p>
+              {/* SIZE SELECTOR */}
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest">Select Size</p>
+
+                <div className="flex gap-3">
+                  {product.sizes?.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`w-10 h-10 border text-xs font-bold
+        ${
+          selectedSize === size
+            ? "bg-black text-white border-black"
+            : "border-gray-300"
+        }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* Stock */}
               <p className="text-xs text uppercase tracking-widest">
@@ -153,18 +175,17 @@ const isFavorite = favorites.find((p) => p._id === product._id);
                   Add to Cart
                 </button>
 
-<button
-  onClick={toggleFavoriteHandler}
-  className="w-full text1 py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all"
->
-  <Heart
-    className={`w-4 h-4 transition-colors ${
-      isFavorite ? "text-pink-500 fill-pink-500" : "text-black"
-    }`}
-  />
-  {isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
-</button>
-
+                <button
+                  onClick={toggleFavoriteHandler}
+                  className="w-full text1 py-5 border border-zinc-300 text-[10px] font-bold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all"
+                >
+                  <Heart
+                    className={`w-4 h-4 transition-colors ${
+                      isFavorite ? "text-pink-500 fill-pink-500" : "text-black"
+                    }`}
+                  />
+                  {isFavorite ? "Remove from Wishlist" : "Add to Wishlist"}
+                </button>
               </div>
 
               {/* TRUST */}

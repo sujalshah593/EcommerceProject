@@ -62,9 +62,10 @@ const CartPage = () => {
 
                   <div className="flex-1">
                     <h3 className="font-serif text-lg mb-2 text1">{item.name}</h3>
+                    <h3 className="text-sm text-gray-500 text">Size: <b className="text-black text1">{item.size}</b></h3>
 
                     <p className="text-sm font-serif text-gray-500 text mb-4">
-                      Price: ₹{item.price}
+                      Price: <b className="text-black text1">₹{item.price}</b>
                     </p>
                     <div className="flex items-center gap-4 mb-4">
                       <span className="text-sm text-gray-500 font-serif text">Quantity</span>
@@ -103,9 +104,9 @@ const CartPage = () => {
 
                     <button
                       onClick={() => dispatch(removeFromCart(item._id))}
-                      className="text-sm text text-red-500 hover:underline"
+                      className="text-sm text hover:cursor-pointer  text-red-500 hover:underline"
                     >
-                      <Trash />
+                      <Trash className="hover:fill-red-500"/>
                     </button>
                   </div>
 

@@ -10,8 +10,25 @@ export const getAllOrders = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
-  const users = await User.find().select("-password");
-  res.json(users);
+  try {
+    const users = await User.find().select("-password");
+
+    const usersWithOrder = await Promise.all(
+      users.map(async (user) => {
+        const orderCount = await Order.countDocuments({
+          user: user._id,
+        });
+        return {
+          ...user,
+          totalOrders: orderCount,
+        };
+      }),
+    );
+    res.json(users);
+  } catch (error) {
+    console.error("GET USERS ERROR:", error);
+    res.status(500).json({ message: "Failed to fetch users" });
+  }
 };
 
 export const getAllProducts = async (req, res) => {
@@ -91,7 +108,6 @@ export const createProduct = async (req, res) => {
 
 export const getDashboardStats = async (req, res) => {
   try {
-
     const totalOrders = await Order.countDocuments();
     const activeUsers = await User.countDocuments();
 
@@ -135,7 +151,6 @@ export const getDashboardStats = async (req, res) => {
       revenue: r.revenue,
     }));
 
-
     const targetGroupAgg = await Order.aggregate([
       { $unwind: "$orderItems" },
 
@@ -152,7 +167,7 @@ export const getDashboardStats = async (req, res) => {
 
       {
         $group: {
-          _id: "$productInfo.targetGroup", 
+          _id: "$productInfo.targetGroup",
           value: { $sum: "$orderItems.qty" },
         },
       },

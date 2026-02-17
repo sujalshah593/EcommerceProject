@@ -62,3 +62,23 @@ export const getMyOrders = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch my orders" });
     }
 };
+
+export const updateOrderStatus = async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return res.status(404).json({ message: "Order not found" });
+  }
+
+  const newStatus = req.body.status;
+
+  order.status = newStatus;
+  order.statusHistory.push({
+    status: newStatus,
+    date: new Date(),
+  });
+
+  await order.save();
+
+  res.json({ message: "Order status updated", order });
+}

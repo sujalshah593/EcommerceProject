@@ -16,9 +16,9 @@ const FooterSection = () => {
                 believe in the beauty of simplicity and the integrity of natural materials.
               </p>
               <div className="flex gap-6 text">
-                <Instagram className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
+                {/* <Instagram className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
                 <Facebook className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
-                <Twitter className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" />
+                <Twitter className="w-5 h-5 hover:text-accent cursor-pointer transition-colors" /> */}
               </div>
             </div>
 

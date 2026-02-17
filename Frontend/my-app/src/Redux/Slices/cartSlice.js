@@ -9,9 +9,12 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const item = action.payload;
 
-      const existItem = state.cartItems.find(
-        (x) => x._id === item._id
-      );
+const existItem = state.cartItems.find(
+  (item) =>
+    item._id === action.payload._id &&
+    item.size === action.payload.size
+);
+
 
       if (existItem) {
         existItem.qty += 1;

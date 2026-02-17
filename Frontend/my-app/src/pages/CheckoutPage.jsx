@@ -275,7 +275,15 @@ const CheckoutPage = () => {
                         name="cvc"
                         placeholder="CVV"
                         value={formData.cvc}
-                        onChange={handleInputChange}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, ""); // remove non-numbers
+                          if (value.length <= 3) {
+                            setFormData((prev) => ({ ...prev, cvc: value }));
+                          }
+                        }}
+                        maxLength={3}
+                        inputMode="numeric"
+                        pattern="[0-9]{3}"
                         className="border text px-4 py-3"
                         required
                       />
