@@ -1,92 +1,71 @@
-import React from 'react'
-import { ArrowRight } from 'lucide-react'
-import men from '../assets/men.png'
-import download from '../assets/download.jpg';
-import { Link } from 'react-router-dom';
-import left_image from "../assets/left_image.png"
-import boys from '../assets/boys.png'
+import React from "react";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import feature from "../assets/feature.avif";
+import boys from "../assets/boys.png";
+import boys1 from "../assets/boys1.png";
+import men from "../assets/men.jpg";
+import men2 from "../assets/men2.png";
+
 
 const FeaturedSection = () => {
   return (
-    <>
-      <section className="px-6 md:px-12 py-24 max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center font-serif">
-            <div className="lg:col-span-7 relative aspect-[4/5] bg-secondary group overflow-hidden reveal">
-              <img
-                src={left_image}
-                alt="Editorial"
-                className="object-cover group-hover:scale-105 transition-transform duration-1000"
-              />
-              <div className="absolute bottom-8 left-8 text-white">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em]">Issue No. 12</p>
-                <h3 className="text-2xl font-serif italic">Silent Luxury</h3>
-              </div>
-            </div>
-            <div className="lg:col-span-5 space-y-8 reveal">
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent text">Philosophy</span>
-              <h2 className="text-4xl text1 md:text-6xl font-serif leading-[1.1]">
-                The Art of <br />
-                Subtraction
-              </h2>
-              <p className="text-muted-foreground text leading-relaxed text-sm md:text-base">
-                We believe that true luxury lies in what is left out. Our garments are designed with a minimalist lens,
-                focusing on the tension between drape and structure, shadow and light.
-              </p>
-              <div className="pt-4">
-                <a
-                  href="#"
-                  className="group text1 inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em]"
-                >
-                  Read the Journal{" "}
-                  <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-8">
-          <div className="grid grid-cols-1 text md:grid-cols-4 md:grid-rows-2 gap-4 h-[1200px] md:h-[800px]">
-            <div className="md:col-span-2  md:row-span-2 relative group overflow-hidden bg-zinc-100 reveal">
-              <img
-                src={boys}
-                alt="Women"
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
-              <div className="absolute bottom-8 left-8 space-y-2">
-                <h4 className="text-2xl text1 text-white">Ready-to-Wear</h4>
-                <Link
-                  to="/Boys"
-                  className="inline-block text-[10px] font-bold uppercase tracking-widest text-white border-b border-white pb-1"
-                >
-                  For Kids
-                </Link>
-              </div>
-            </div>
-            <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden bg-zinc-100 reveal">
-              <img
-                src={men}
-                alt="Men"
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
-              <div className="absolute bottom-8 left-8 space-y-2">
-                <h4 className="text-2xl font-serif text1 text-white">Modern Tailoring</h4>
-                <Link
-                  to="/Mens"
-                  className="inline-block text-[10px] font-bold uppercase tracking-widest text-white border-b border-white pb-1"
-                >
-                  Shop Mens
-                </Link>
-              </div>
-            </div>
-            
-          </div>
-        </section>
-    </>
-  )
-}
+    <section className="px-6 md:px-12 py-24 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
 
-export default FeaturedSection
+        {/* Left Image */}
+        <div className="lg:col-span-6 relative hover:scale-105 transition rounded-2xl overflow-hidden">
+          <img
+            src={feature}
+            alt="Editorial"
+            className="w-[120%] h-[90%] object-cover"
+          />
+        </div>
+
+        {/* Right Content */}
+        <div className="lg:col-span-6 space-y-6">
+          <h2 className="text-4xl md:text-5xl text1 lg:text-5xl font-black uppercase leading-tight">
+            How you express identity, not just clothing.
+          </h2>
+
+          <p className="text-sm text font-bold uppercase tracking-widest text-gray-500">
+            / Latest Work 2025
+          </p>
+
+          <p className="text-gray-600 text text-sm md:text-base leading-relaxed">
+            To us, fashion goes beyond passing trends—it serves as a language of
+            expression. Our collections embody freedom, individuality, and
+            authenticity.
+          </p>
+
+          <Link
+            to="/about"
+            className="inline-flex text items-center gap-2 font-semibold text-sm underline"
+          >
+            More About Us
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+
+          {/* Thumbnails */}
+          <div className="flex gap-3 pt-4">
+            {[boys, boys1, men, men2].map((img, i) => (
+              <div
+                key={i}
+                className="w-16  h-16 hover:scale-105 transition md:w-20 md:h-20 rounded-lg overflow-hidden"
+              >
+                <img
+                  src={img}
+                  alt="thumb"
+                  className="w-full hover:scale-105 transition h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default FeaturedSection;

@@ -10,6 +10,8 @@ import FeaturedSection from "../components/FeaturedSection.jsx";
 import ContactSection from "../components/ContactSection.jsx";
 import FooterSection from "../components/FooterSection.jsx";
 import TruckLoader from "../components/TruckLoader.jsx";
+import BuyerSection from "../components/BuyerSection.jsx";
+import MiddleHeroSection from "../components/MiddleHeroSection.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -45,6 +47,8 @@ const Home = () => {
       <Navbar />
       <HeroSection />
       <FeaturedSection />
+      <BuyerSection/>
+      <MiddleHeroSection/>
 
       <ProductSection
         products={products}
